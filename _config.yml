@@ -11,9 +11,9 @@ title                    : "Gaotang Li"
 title_separator          : #"-"
 name                     : &name "Gaotang Li"
 description              : &description "personal website"
-url                      : https://motivationss.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : https://GaotangLi.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "motivationss/motivationss.github.io"
+repository               : "GaotangLi/GaotangLi.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
@@ -96,20 +96,20 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "motivationss"
+  github           : "GaotangLi"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         :
+  linkedin         : https://www.linkedin.com/in/gaotang-li-68471231b/
   orcid            : #"http://orcid.org/yourorcidurl"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : #"replacethistwitterhandle"
+  twitter          : https://x.com/GaotangLi
   vine             :
   weibo            :
   xing             :
