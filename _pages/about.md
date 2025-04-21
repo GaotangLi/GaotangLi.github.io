@@ -14,7 +14,7 @@ About Me
 ======
 ---
 
-I'm a first-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor’s degree from the University of Michigan. My recent research interests lie primarily on the science of large language models and representation learning.
+I'm a first-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor’s degree from the University of Michigan. My main research lie broadly in large language models (LLMs), particularly developing **the science of Language Models** and enhancing their **reasoning** abilities. My current research interest is **reasoning LLM** and **RL**.
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
@@ -22,6 +22,12 @@ Papers
 ======
 ---
 (\* denotes equal contribution)
+
+* [Taming Knowledge Conflicts in Language Models](https://www.arxiv.org/abs/2503.10996)<br> 
+**Gaotang Li**, Yuzhong Chen, Hanghang Tong<br>
+*Manuscript, 2025*<br> 
+
+**Before PhD**
 
 * [On the Impact of Feature Heterophily on Link Prediction with Graph Neural Networks](https://arxiv.org/abs/2409.17475)<br> 
 Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<br>
