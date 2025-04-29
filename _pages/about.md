@@ -14,7 +14,7 @@ About Me
 ======
 ---
 
-I'm a first-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor’s degree from the University of Michigan. My main research lie broadly in large language models (LLMs), particularly developing **the science of Language Models** and enhancing their **reasoning** abilities. My current research interest is **reasoning LLM** and **RL**.
+I'm a first-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor’s degree from the University of Michigan. My main research lie broadly in large language models (LLMs), particularly developing **the science of Language Models** and enhancing their **reasoning** abilities. My current research interest is **reasoning LLM**, **RL**, and **alignment**.
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
