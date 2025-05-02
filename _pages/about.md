@@ -28,7 +28,7 @@ Papers
 *ICML 2025 <span style="color: red;">(spotlight)</span>*<br> 
 [[PDF](https://www.arxiv.org/abs/2503.10996)] [[Code](https://github.com/GaotangLi/JUICE)] [[Project Page](https://gaotangli.github.io/project_page/Taming-Knowledge-Conflict/)]<br>
 
-**Before PhD**
+**Before Ph.D.**
 
 * [On the Impact of Feature Heterophily on Link Prediction with Graph Neural Networks](https://arxiv.org/abs/2409.17475)<br> 
 Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<br>
