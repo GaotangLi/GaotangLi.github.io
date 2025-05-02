@@ -72,17 +72,6 @@
                       <span>Supplementary</span>
                     </a>
                   </span> -->
-
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/GaotangLi/JUICE" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
                 
                 <!-- Code Link. -->
                 <span class="link-block">
@@ -129,22 +118,36 @@
 </section>
 
 
-<!-- Teaser video-->
-<section class="hero teaser">
+<section class="section">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
+    <div class="columns is-centered">
+      <div class="column is-11">
+        <!-- boxed, lightly-shaded panel -->
+        <div class="box">
+          <h2 class="title is-3 has-text-centered">
+            How Do Language Models Handle Conflicting Knowledge?
+          </h2>
+
+          <p class="has-text-justified">
+            Large Language Models (LLMs) store vast <em>parametric memories</em> in their
+            weights while simultaneously ingesting fresh <em>contextual knowledge</em> at
+            inference time.  When the two disagree, models may hallucinate, flip-flop,
+            or contradict themselves.
+          </p>
+
+          <p class="has-text-justified">
+            Our paper <strong>Taming Knowledge Conflicts in Language Models</strong>
+            introduces <strong>ParaConflict</strong>, a controlled benchmark that isolates
+            these clashes, and <strong>JuICE</strong>, a simple attention-head
+            reweighting scheme that recovers factual accuracy — up to
+            <strong>27 percentage-points</strong> — with <u>zero</u> additional finetuning.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-<!-- End teaser video -->
+
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
