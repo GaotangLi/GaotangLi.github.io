@@ -26,6 +26,7 @@ Papers
 * [Taming Knowledge Conflicts in Language Models](https://www.arxiv.org/abs/2503.10996)<br> 
 **Gaotang Li**, Yuzhong Chen, Hanghang Tong<br>
 *ICML 2025 <span style="color: red;">(spotlight)</span>*<br> 
+[[[PDF]]](https://www.arxiv.org/abs/2503.10996) [[Code]](https://github.com/GaotangLi/JUICE)[[Project Page]](https://gaotangli.github.io/project_page/Taming-Knowledge-Conflict/)<br>
 
 **Before PhD**
 
