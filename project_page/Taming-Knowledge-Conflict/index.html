@@ -210,7 +210,7 @@
           <img src="./static/images/merged_table.png" class="center">
           </p>
           <div class="content has-text-justified">
-            Observation 2: Counteracting Effects of Multiple Individually Effective Interventions.
+            Observation 2: Counteracting Effects of Multiple Individually Effective Interventions. These observations collectively suggest the CP superposition phenomenon.
           </div>
       </div>
     </div>
@@ -234,13 +234,72 @@
           dual-run inference stage, where the model runs twice: first
           saving the outputs of the identified heads, and then using
           scaled versions of these saved outputs to intervene during
-          the second run. 
+          the second run. Intuitively, this approach ensures that the
+          identified components are consistently effective and the dual-run strategy further mitigates
+          the superposition effects, therefore providing more accurate steering directions through residual head activations.
         </div>
       </div>
     </div>
   </div>
 </section>
 
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results. -->
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+        <h2 class="title is-3">(Representative) Experiment Results</h2>
+        <p align="center">
+        <img src="./static/images/parametric_experiment.png" class="center">
+        </p>
+        <div class="content has-text-justified">
+          (Representative) experiment results of the intervention for enhancing parametric memory on the ParaConflict dataset. All results are in accuracy (%). 
+          1, 2, 3 represents clean input, substitution conflict, and coherent conflict respectively. 
+          JUICE could almost compeltely reverse the model tendency from being misled by context to its parametric memory in all cases.  
+        </div>
+        <p align="center">
+          <img src="./static/images/Context_and_RunTwice.png" class="center">
+          </p>
+          <div class="content has-text-justified">
+            Left: (Representative) experiment results of the intervention for enhancing contextual beliefs on the standard RAG hallucination dataset. JUICE still achieves the best steering effect. 
+            Right: A fine-grained experiment showcasing the effect of running twice v.s. running once. The result shows that naive single-pass interventions are unstable
+            and prone to degradation. In contrast, the dual-run design ensures
+            consistent and effective interventions.
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results. -->
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+        <h2 class="title is-3">Theoretical Analysis</h2>
+        <p align="center">
+        <img src="./static/images/parametric_experiment.png" class="center">
+        </p>
+        <div class="content has-text-justified">
+          (Representative) experiment results of the intervention for enhancing parametric memory on the ParaConflict dataset. All results are in accuracy (%). 
+          1, 2, 3 represents clean input, substitution conflict, and coherent conflict respectively. 
+          JUICE could almost compeltely reverse the model tendency from being misled by context to its parametric memory in all cases.  
+        </div>
+        <p align="center">
+          <img src="./static/images/Context_and_RunTwice.png" class="center">
+          </p>
+          <div class="content has-text-justified">
+            Left: (Representative) experiment results of the intervention for enhancing contextual beliefs on the standard RAG hallucination dataset. JUICE still achieves the best steering effect. 
+            Right: A fine-grained experiment showcasing the effect of running twice v.s. running once. The result shows that naive single-pass interventions are unstable
+            and prone to degradation. In contrast, the dual-run design ensures
+            consistent and effective interventions.
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
