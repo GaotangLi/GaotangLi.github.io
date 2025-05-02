@@ -280,23 +280,27 @@
       <div class="column has-text-centered">
         <h2 class="title is-3">Theoretical Analysis</h2>
         <p align="center">
-        <img src="./static/images/parametric_experiment.png" class="center">
+        <img src="./static/images/Task_setting.png" class="center">
         </p>
         <div class="content has-text-justified">
-          (Representative) experiment results of the intervention for enhancing parametric memory on the ParaConflict dataset. All results are in accuracy (%). 
-          1, 2, 3 represents clean input, substitution conflict, and coherent conflict respectively. 
-          JUICE could almost compeltely reverse the model tendency from being misled by context to its parametric memory in all cases.  
+          The setting for our theoretical analysis. The left is the parametric task (factual recall) and the right is the context task (induction). Our first set of results is to show the 
+          existence of a perfect solver and how training by gradient descent could result in such solution. 
         </div>
         <p align="center">
-          <img src="./static/images/Context_and_RunTwice.png" class="center">
+          <img src="./static/images/first_two_prop.png" class="center">
           </p>
           <div class="content has-text-justified">
-            Left: (Representative) experiment results of the intervention for enhancing contextual beliefs on the standard RAG hallucination dataset. JUICE still achieves the best steering effect. 
-            Right: A fine-grained experiment showcasing the effect of running twice v.s. running once. The result shows that naive single-pass interventions are unstable
-            and prone to degradation. In contrast, the dual-run design ensures
-            consistent and effective interventions.
+            Next, we show that how distinct, well-defined training
+            tasks can overlap at inference, resulting in knowledge conflict (left and mid part of the figure below). 
           </div>
+          <p align="center">
+            <img src="./static/images/Final_theory_figure.png" class="center">
+            </p>
+            <div class="content has-text-justified">
+              Finally, we justify the effectiveness of the run-twice strategy over run-once (in the rightmost part).
+            </div>
       </div>
+
     </div>
   </div>
 </section>
