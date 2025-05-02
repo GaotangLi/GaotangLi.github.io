@@ -32,7 +32,7 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Taming Knowledge Conflict in Language Models (ICML 2025)</h1>
+            <h1 class="title is-1 publication-title">Taming Knowledge Conflict in Language Models (ICML 2025 Spotlight)</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
@@ -118,37 +118,6 @@
 </section>
 
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-11">
-        <!-- boxed, lightly-shaded panel -->
-        <div class="box">
-          <h2 class="title is-3 has-text-centered">
-            How Do Language Models Handle Conflicting Knowledge?
-          </h2>
-
-          <p class="has-text-justified">
-            Large Language Models (LLMs) store vast <em>parametric memories</em> in their
-            weights while simultaneously ingesting fresh <em>contextual knowledge</em> at
-            inference time.  When the two disagree, models may hallucinate, flip-flop,
-            or contradict themselves.
-          </p>
-
-          <p class="has-text-justified">
-            Our paper <strong>Taming Knowledge Conflicts in Language Models</strong>
-            introduces <strong>ParaConflict</strong>, a controlled benchmark that isolates
-            these clashes, and <strong>JuICE</strong>, a simple attention-head
-            reweighting scheme that recovers factual accuracy — up to
-            <strong>27 percentage-points</strong> — with <u>zero</u> additional finetuning.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
@@ -157,7 +126,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            Language Models (LMs) often encounter <strong>knowledge conflicts</strong> when parametric memory contradicts contextual knowledge. Previous works attribute this conflict to the interplay between "memory heads" and "context heads", attention heads assumed to promote either memory or context exclusively. In this study, we go beyond this fundamental assumption by uncovering a critical phenomenon we term the <strong>superposition of contextual information and parametric memory (CP superposition)</strong>, where highly influential attention heads simultaneously contribute to both memory and context. Building upon this insight, we propose <strong>Just Run Twice (JRT)</strong>, a test-time attention intervention method that steers LMs toward either parametric beliefs or contextual knowledge without requiring fine-tuning. JRT identifies a set of reliable attention heads and leverages a dual-run approach to mitigate the superposition effects. Extensive experiments across 11 datasets and 6 model architectures demonstrate that <strong>JRT</strong> sets the new state-of-the-art performance and robust generalization, achieving significant and consistent improvement across different domains under various conflict types. Finally, we theoretically analyze knowledge conflict and CP superposition in attention heads, which further elucidates the effectiveness of JRT in these settings.
           </p>
         </div>
       </div>
