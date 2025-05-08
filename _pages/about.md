@@ -23,6 +23,11 @@ Papers
 ---
 (\* denotes equal contribution)
 
+* [RM-R1: Reward Modeling as Reasoning](https://arxiv.org/pdf/2505.02387)<br> 
+Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hongru Wang, Yu Zhang, Denghui Zhang, Tong Zhang, Hanghang Tong, Heng Ji<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2505.02387)] [[Code](https://github.com/RM-R1-UIUC/RM-R1)] [[HuggingFace](https://huggingface.co/collections/gaotang/rm-r1-681128cdab932701cad844c8)]<br>
+
 * [Taming Knowledge Conflicts in Language Models](https://www.arxiv.org/abs/2503.10996)<br> 
 **Gaotang Li**, Yuzhong Chen, Hanghang Tong<br>
 *ICML 2025 <span style="color: red;">(spotlight)</span>*<br> 
@@ -42,7 +47,7 @@ Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<b
 
 * [Size Generalizability of Graph Neural Networks on Biological Data: Insights and Practices from the Spectral Perspective](https://arxiv.org/abs/2305.15611)<br>
 **Gaotang Li**, Danai Koutra, Yujun Yan<br>
-*Manuscript, 2024*<br> 
+*Manuscript 2024*<br> 
 [[PDF](https://arxiv.org/abs/2305.15611)] [[Code](https://gaotangli.github.io/)]<br>
 
 * [Interpretable Sparsification of Brain Graphs: Better Practices and Effective Designs for Graph Neural Networks](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)<br>
