@@ -47,7 +47,7 @@ Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<b
 
 * [Size Generalizability of Graph Neural Networks on Biological Data: Insights and Practices from the Spectral Perspective](https://arxiv.org/abs/2305.15611)<br>
 **Gaotang Li**, Danai Koutra, Yujun Yan<br>
-*Manuscript 2024*<br> 
+*KDD 2025*<br> 
 [[PDF](https://arxiv.org/abs/2305.15611)] [[Code](https://gaotangli.github.io/)]<br>
 
 * [Interpretable Sparsification of Brain Graphs: Better Practices and Effective Designs for Graph Neural Networks](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)<br>
