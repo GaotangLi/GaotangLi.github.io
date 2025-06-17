@@ -18,18 +18,20 @@ I'm a first-year PhD student in Computer Science at University of Illinois Urban
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
+You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to submit this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
+
 Papers
 ======
 ---
 (\* denotes equal contribution)
 
 * [Saffron-1: Towards an Inference Scaling Paradigm for LLM Safety Assurance](https://www.arxiv.org/abs/2506.06444)<br> 
-Ruizhong Qiu\*, Gaotang Li\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
+Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://www.arxiv.org/pdf/2506.06444)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
 
 * [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
-Xiao Lin\*, Zhining Liu\*, Ze Yang\*, Gaotang Li, Ruizhong Qiu, Shuke Wang, Hui Liu, Haotian Li, Sumit Keswani, Vishwa Pardeshi, Huijun Zhao, Wei Fan, Hanghang Tong<br>
+Xiao Lin\*, Zhining Liu\*, Ze Yang\*, **Gaotang Li**, Ruizhong Qiu, Shuke Wang, Hui Liu, Haotian Li, Sumit Keswani, Vishwa Pardeshi, Huijun Zhao, Wei Fan, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
 
