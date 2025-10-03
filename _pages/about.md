@@ -14,18 +14,34 @@ About Me
 ======
 ---
 
-I'm a first-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My main research lie broadly in large language models (LLMs), particularly developing **the science of Language Models** and enhancing their **reasoning** abilities. My current research interest is **reasoning**, **RL**, and **alignment**.
+I'm a second-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center around **Language Model Post-training** and the **Science of Language Models**.
+
+
+
+<!-- My research lies broadly in language models, where I aim to build a solid scientific foundation of key phenomena and problems and to develop practically effective pipelines for important downstream applications.  -->
+<!-- My current research interests center around **Language Model Post-training**. -->
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
 You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to submit this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
+
+
+<span style="color:red; font-weight:bold; font-size:small;">
+  I am currently seeking research internship opportunities for Summer 2026.
+</span>
 
 Papers
 ======
 ---
 (\* denotes equal contribution)
 
-* [Saffron-1: Towards an Inference Scaling Paradigm for LLM Safety Assurance](https://www.arxiv.org/abs/2506.06444)<br> 
+* [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
+**Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
+
+
+* [Saffron-1: Safety Inference Time Scaling](https://www.arxiv.org/abs/2506.06444)<br> 
 Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://www.arxiv.org/pdf/2506.06444)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
