@@ -73,7 +73,7 @@ Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<b
 *TMLR 2024*<br> 
 [[PDF](https://arxiv.org/abs/2309.06717)] [[Code](https://github.com/GaotangLi/BAM)]<br>
 
-* [Size Generalizability of Graph Neural Networks on Biological Data: Insights and Practices from the Spectral Perspective](https://arxiv.org/abs/2305.15611)<br>
+* [Tackling Size Generalization of Graph Neural Networks on Biological Data from a Spectral Perspective](https://arxiv.org/abs/2305.15611)<br>
 **Gaotang Li**, Danai Koutra, Yujun Yan<br>
 *KDD 2025*<br> 
 [[PDF](https://arxiv.org/abs/2305.15611)] [[Code](https://gaotangli.github.io/)]<br>
