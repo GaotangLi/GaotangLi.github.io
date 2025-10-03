@@ -41,7 +41,7 @@ Papers
 [[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
 
 
-* [Saffron-1: Safety Inference Time Scaling](https://www.arxiv.org/abs/2506.06444)<br> 
+* [Saffron-1: Safety Inference Scaling](https://www.arxiv.org/abs/2506.06444)<br> 
 Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://www.arxiv.org/pdf/2506.06444)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
