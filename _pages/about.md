@@ -26,7 +26,7 @@ Email: gaotang3 \[at\] illinois [dot] edu
 You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to submit this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
 
 
-<span style="color:red; font-weight:bold; font-size:small;">
+<span style="color:red">
   I am currently seeking research internship opportunities for Summer 2026.
 </span>
 
