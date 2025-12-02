@@ -14,16 +14,11 @@ About Me
 ======
 ---
 
-I'm a second-year PhD student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center around **Language Model Post-training** and the **Science of Language Models**.
-
-
-
-<!-- My research lies broadly in language models, where I aim to build a solid scientific foundation of key phenomena and problems and to develop practically effective pipelines for important downstream applications.  -->
-<!-- My current research interests center around **Language Model Post-training**. -->
+I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center around **Language Models**, especially on **Post-training** and their **reliable deployments**.
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
-You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to submit this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
+You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to fill out this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
 
 
 <span style="color:red">
@@ -35,21 +30,12 @@ Papers
 ---
 (\* denotes equal contribution)
 
+**2025**
+
 * [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
-
-
-* [Saffron-1: Safety Inference Scaling](https://www.arxiv.org/abs/2506.06444)<br> 
-Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
-*Manuscript 2025*<br> 
-[[PDF](https://www.arxiv.org/pdf/2506.06444)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
-
-* [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
-Xiao Lin\*, Zhining Liu\*, Ze Yang\*, **Gaotang Li**, Ruizhong Qiu, Shuke Wang, Hui Liu, Haotian Li, Sumit Keswani, Vishwa Pardeshi, Huijun Zhao, Wei Fan, Hanghang Tong<br>
-*Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
 
 * [RM-R1: Reward Modeling as Reasoning](https://arxiv.org/abs/2505.02387)<br> 
 Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hongru Wang, Yu Zhang, Denghui Zhang, Tong Zhang, Hanghang Tong, Heng Ji<br>
@@ -60,6 +46,32 @@ Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hon
 **Gaotang Li**, Yuzhong Chen, Hanghang Tong<br>
 *ICML 2025 <span style="color: red;">(spotlight)</span>*<br> 
 [[PDF](https://www.arxiv.org/pdf/2503.10996)] [[Code](https://github.com/GaotangLi/JUICE)] [[HuggingFace](https://huggingface.co/collections/gaotang/knowledge-conflict-681408090438726d04c440ca)] [[Project Page](https://gaotangli.github.io/project_page/Taming-Knowledge-Conflict/)] [[Tweet](https://x.com/GaotangLi/status/1918155972050395531)]<br>
+
+* [Latent Collaboration in Multi-Agent Systems](https://arxiv.org/abs/2511.20639)<br> 
+Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu, Ke Shen, Hanghang Tong, Yejin Choi, Jingrui He, James Zou, Mengdi Wang, Ling Yang<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/Jiaru_Zou/status/1993872516645794038)]<br>
+
+* [Efficient Inference Scaling for Safety Assurance](https://q-rz.github.io/static/preprint/saffron-paper.pdf)<br> 
+Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
+*NeurIPS 2025 Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
+[[PDF](https://q-rz.github.io/static/preprint/saffron-paper.pdf)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
+
+* [Toward Honest Language Models for Deductive Reasoning](https://arxiv.org/abs/2511.09222)<br> 
+Jiarui Liu, Kaustubh Dhole, Yingheng Wang, Haoyang Wen, Sarah Zhang, Haitao Mao, **Gaotang Li**, Neeraj Varshney, Jingguo Liu, Xiaoman Pan<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2511.09222)]<br>
+
+* [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
+Xiao Lin\*, Zhining Liu\*, Ze Yang\*, **Gaotang Li**, Ruizhong Qiu, Shuke Wang, Hui Liu, Haotian Li, Sumit Keswani, Vishwa Pardeshi, Huijun Zhao, Wei Fan, Hanghang Tong<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
+
+* [Graph Homophily Booster: Rethinking the Role of Discrete Features on Heterophilic Graphs](https://arxiv.org/abs/2509.12530)<br> 
+Ruizhong Qiu\*, Ting-Wei Li\*, **Gaotang Li**, Hanghang Tong<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2509.12530)]<br>
+
 
 **Before Ph.D.**
 
