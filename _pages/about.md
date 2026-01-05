@@ -51,7 +51,7 @@ Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu
 
 * [Efficient Inference Scaling for Safety Assurance](https://q-rz.github.io/static/preprint/saffron-paper.pdf)<br> 
 Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
-*NeurIPS 2025 Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
+*NeurIPS Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
 [[PDF](https://q-rz.github.io/static/preprint/saffron-paper.pdf)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
 
 * [Toward Honest Language Models for Deductive Reasoning](https://arxiv.org/abs/2511.09222)<br> 
