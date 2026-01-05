@@ -14,16 +14,13 @@ About Me
 ======
 ---
 
-I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center around **Language Models**, especially on **Post-training** and their **reliable deployments**.
+I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests focus on advancing the **reasoning** capabilities of foundation models.
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
 You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to fill out this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
 
 
-<span style="color:red">
-  I am currently seeking research internship opportunities for Summer 2026.
-</span>
 
 Papers
 ======
