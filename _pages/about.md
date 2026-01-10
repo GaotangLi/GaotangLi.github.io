@@ -47,10 +47,10 @@ Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hon
 * [Latent Collaboration in Multi-Agent Systems](https://arxiv.org/abs/2511.20639)<br> 
 Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu, Ke Shen, Hanghang Tong, Yejin Choi, Jingrui He, James Zou, Mengdi Wang, Ling Yang<br>
 *Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/Jiaru_Zou/status/1993872516645794038)]<br>
+[[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/rohanpaul_ai/status/1994608002003853529)]<br>
 
 * [Efficient Inference Scaling for Safety Assurance](https://q-rz.github.io/static/preprint/saffron-paper.pdf)<br> 
-Ruizhong Qiu\*, **Gaotang Li**\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
+Ruizhong Qiu\*, **Gaotang Li**\*, Ting-Wei Li\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
 *NeurIPS Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
 [[PDF](https://q-rz.github.io/static/preprint/saffron-paper.pdf)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
 
