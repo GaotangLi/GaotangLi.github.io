@@ -22,10 +22,26 @@ You can call me as Oliver. If you would like to chat with me about anything (e.g
 
 
 
-Papers
+Selected Papers
 ======
 ---
 (\* denotes equal contribution)
+
+
+
+**2026**
+
+
+* [RM-R1: Reward Modeling as Reasoning](https://arxiv.org/abs/2505.02387)<br> 
+Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hongru Wang, Yu Zhang, Denghui Zhang, Tong Zhang, Hanghang Tong, Heng Ji<br>
+*ICLR 2026*<br> 
+[[PDF](https://arxiv.org/pdf/2505.02387)] [[Code](https://github.com/RM-R1-UIUC/RM-R1)] [[HuggingFace](https://huggingface.co/collections/gaotang/rm-r1-681128cdab932701cad844c8)] [[Project Page](https://rm-r1-uiuc.github.io/rmr1-site/)] [[Tweet](https://x.com/xiusi_chen/status/1919748233095450922)]<br>
+
+* [Graph Homophily Booster: Rethinking the Role of Discrete Features on Heterophilic Graphs](https://arxiv.org/abs/2509.12530)<br> 
+Ruizhong Qiu\*, Ting-Wei Li\*, **Gaotang Li**, Hanghang Tong<br>
+*ICLR 2026*<br> 
+[[PDF](https://arxiv.org/pdf/2509.12530)]<br>
+
 
 **2025**
 
@@ -33,11 +49,6 @@ Papers
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
 *Manuscript 2025*<br> 
 [[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
-
-* [RM-R1: Reward Modeling as Reasoning](https://arxiv.org/abs/2505.02387)<br> 
-Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hongru Wang, Yu Zhang, Denghui Zhang, Tong Zhang, Hanghang Tong, Heng Ji<br>
-*Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2505.02387)] [[Code](https://github.com/RM-R1-UIUC/RM-R1)] [[HuggingFace](https://huggingface.co/collections/gaotang/rm-r1-681128cdab932701cad844c8)] [[Project Page](https://rm-r1-uiuc.github.io/rmr1-site/)] [[Tweet](https://x.com/xiusi_chen/status/1919748233095450922)]<br>
 
 * [Taming Knowledge Conflicts in Language Models](https://www.arxiv.org/abs/2503.10996)<br> 
 **Gaotang Li**, Yuzhong Chen, Hanghang Tong<br>
@@ -53,22 +64,6 @@ Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu
 Ruizhong Qiu\*, **Gaotang Li**\*, Ting-Wei Li\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
 *NeurIPS Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
 [[PDF](https://q-rz.github.io/static/preprint/saffron-paper.pdf)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
-
-* [Toward Honest Language Models for Deductive Reasoning](https://arxiv.org/abs/2511.09222)<br> 
-Jiarui Liu, Kaustubh Dhole, Yingheng Wang, Haoyang Wen, Sarah Zhang, Haitao Mao, **Gaotang Li**, Neeraj Varshney, Jingguo Liu, Xiaoman Pan<br>
-*Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2511.09222)]<br>
-
-* [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
-Xiao Lin\*, Zhining Liu\*, Ze Yang\*, **Gaotang Li**, Ruizhong Qiu, Shuke Wang, Hui Liu, Haotian Li, Sumit Keswani, Vishwa Pardeshi, Huijun Zhao, Wei Fan, Hanghang Tong<br>
-*Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
-
-* [Graph Homophily Booster: Rethinking the Role of Discrete Features on Heterophilic Graphs](https://arxiv.org/abs/2509.12530)<br> 
-Ruizhong Qiu\*, Ting-Wei Li\*, **Gaotang Li**, Hanghang Tong<br>
-*Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2509.12530)]<br>
-
 
 **Before Ph.D.**
 
