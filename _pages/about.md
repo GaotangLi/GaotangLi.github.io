@@ -22,14 +22,14 @@ You can call me as Oliver. If you would like to chat with me about anything (e.g
 
 
 
-Selected Papers
+Papers
 ======
 ---
 (\* denotes equal contribution)
 
-
-
 <!-- **2026** -->
+
+## Language Models and Agents
 
 * [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
@@ -59,15 +59,46 @@ Ruizhong Qiu\*, **Gaotang Li**\*, Ting-Wei Li\*, Tianxin Wei, Jingrui He, Hangha
 *NeurIPS Workshop on Vision--Language Model Real-World Deployment, 2025*<br> 
 [[PDF](https://q-rz.github.io/static/preprint/saffron-paper.pdf)] [[Code](https://github.com/q-rz/saffron)] [[Project Page](https://q-rz.github.io/p/saffron/)] [[Tweet](https://x.com/GaotangLi/status/1932289294657626189)]<br>
 
+<!-- * [Agentic Reasoning for Large Language Models](https://arxiv.org/abs/2601.12538)<br> 
+Wei et al.<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
+
+* [ALERT: Zero-shot LLM Jailbreak Detection via Internal Discrepancy Amplification](https://arxiv.org/abs/2601.03600)<br> 
+Lin et al.<br>
+*Manuscript 2026*<br> 
+[[PDF](https://arxiv.org/pdf/2601.03600)]<br> -->
+
+* [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
+Lin et al.<br>
+*Manuscript 2025*<br> 
+[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
+
+
+## Graph Machine Learning and Distribution Shifts
+
 * [Graph Homophily Booster: Rethinking the Role of Discrete Features on Heterophilic Graphs](https://arxiv.org/abs/2509.12530)<br> 
 Ruizhong Qiu\*, Ting-Wei Li\*, **Gaotang Li**, Hanghang Tong<br>
 *ICLR 2026*<br> 
 [[PDF](https://arxiv.org/pdf/2509.12530)]<br>
 
+<!-- 
+**Before Ph.D.** -->
+
 * [On the Impact of Feature Heterophily on Link Prediction with Graph Neural Networks](https://arxiv.org/abs/2409.17475)<br> 
 Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<br>
 *NeurIPS 2024*<br> 
 [[PDF](https://openreview.net/pdf?id=3LZHatxUa9)] [[Code](https://github.com/GemsLab/HeteLinkPred)]<br>
+
+* [Bias Amplification Enhances Minority Group Performance](http://arxiv.org/abs/2309.06717)<br>
+**Gaotang Li**\*, Jiarui Liu\*, Wei Hu<br>
+*TMLR 2024*<br> 
+[[PDF](https://arxiv.org/abs/2309.06717)] [[Code](https://github.com/GaotangLi/BAM)]<br>
+
+* [Tackling Size Generalization of Graph Neural Networks on Biological Data from a Spectral Perspective](https://arxiv.org/abs/2305.15611)<br>
+**Gaotang Li**, Danai Koutra, Yujun Yan<br>
+*KDD 2025*<br> 
+[[PDF](https://arxiv.org/abs/2305.15611)] [[Code](https://gaotangli.github.io/)]<br>
 
 * [Interpretable Sparsification of Brain Graphs: Better Practices and Effective Designs for Graph Neural Networks](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)<br>
 **Gaotang Li**, Marlena Duda, Xiang Zhang, Danai Koutra, Yujun Yan<br>
