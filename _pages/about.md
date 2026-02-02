@@ -14,7 +14,7 @@ About Me
 ======
 ---
 
-I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests focus on advancing the **reasoning** capabilities of foundation models.
+I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests focus on advancing the **reasoning** and **agentic** capabilities of foundation models.
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
@@ -22,14 +22,14 @@ You can call me as Oliver. If you would like to chat with me about anything (e.g
 
 
 
-Papers
+Selected Papers
 ======
 ---
 (\* denotes equal contribution)
 
 <!-- **2026** -->
 
-## Language Models and Agents
+<!-- ## Language Models and Agents -->
 
 * [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
@@ -69,23 +69,23 @@ Lin et al.<br>
 *Manuscript 2026*<br> 
 [[PDF](https://arxiv.org/pdf/2601.03600)]<br> -->
 
-* [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
+<!-- * [MORALISE: A Structured Benchmark for Moral Alignment in Visual Language Models](https://arxiv.org/abs/2505.14728)<br> 
 Lin et al.<br>
 *Manuscript 2025*<br> 
-[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br>
+[[PDF](https://arxiv.org/pdf/2505.14728)] [[HuggingFace](https://huggingface.co/datasets/Ze1025/MORALISE)]<br> -->
 
 
-## Graph Machine Learning and Distribution Shifts
+<!-- ## Graph Machine Learning and Distribution Shifts
 
 * [Graph Homophily Booster: Rethinking the Role of Discrete Features on Heterophilic Graphs](https://arxiv.org/abs/2509.12530)<br> 
 Ruizhong Qiu\*, Ting-Wei Li\*, **Gaotang Li**, Hanghang Tong<br>
 *ICLR 2026*<br> 
-[[PDF](https://arxiv.org/pdf/2509.12530)]<br>
+[[PDF](https://arxiv.org/pdf/2509.12530)]<br> -->
 
 <!-- 
 **Before Ph.D.** -->
 
-* [On the Impact of Feature Heterophily on Link Prediction with Graph Neural Networks](https://arxiv.org/abs/2409.17475)<br> 
+<!-- * [On the Impact of Feature Heterophily on Link Prediction with Graph Neural Networks](https://arxiv.org/abs/2409.17475)<br> 
 Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<br>
 *NeurIPS 2024*<br> 
 [[PDF](https://openreview.net/pdf?id=3LZHatxUa9)] [[Code](https://github.com/GemsLab/HeteLinkPred)]<br>
@@ -103,4 +103,4 @@ Jiong Zhu\*, **Gaotang Li**\*, Yao-An Yang, Jing Zhu, Xuehao Cui, Danai Koutra<b
 * [Interpretable Sparsification of Brain Graphs: Better Practices and Effective Designs for Graph Neural Networks](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)<br>
 **Gaotang Li**, Marlena Duda, Xiang Zhang, Danai Koutra, Yujun Yan<br>
 *KDD 2023*<br>
-[[PDF](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)] [[Code](https://github.com/GaotangLi/IGS)]<br>
+[[PDF](https://dl.acm.org/doi/abs/10.1145/3580305.3599394)] [[Code](https://github.com/GaotangLi/IGS)]<br> -->
