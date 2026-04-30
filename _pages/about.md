@@ -14,7 +14,9 @@ About Me
 ======
 ---
 
-I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526)), judging ([RM-R1](https://arxiv.org/abs/2505.02387)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through scalable algorithms and engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning.
+I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. 
+
+My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My past work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526)), judging ([RM-R1](https://arxiv.org/abs/2505.02387)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through heavy engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning.
 
 
 Email: gaotang3 \[at\] illinois [dot] edu 
