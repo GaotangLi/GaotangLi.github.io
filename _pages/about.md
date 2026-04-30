@@ -14,11 +14,12 @@ About Me
 ======
 ---
 
-I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests focus on advancing the **reasoning** and **agentic** capabilities of foundation models.
+I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526)), judging ([RM-R1](https://arxiv.org/abs/2505.02387)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through scalable algorithms and engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning.
+
 
 Email: gaotang3 \[at\] illinois [dot] edu 
 
-You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to fill out this [form](https://forms.gle/VLyum8ikzMvoDmvo8).
+You can call me as Oliver. If you would like to chat with me about anything (e.g. research, internship opportunities, grad school application, mentorship etc.), feel free to fill out this [form](https://forms.gle/VLyum8ikzMvoDmvo8). Students from underrepresented groups are especially encouraged to reach out.
 
 
 
@@ -33,7 +34,7 @@ Selected Papers
 
 * [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
-*Manuscript 2025*<br> 
+*ICML 2026 <span style="color: red;">(spotlight)</span>*<br> 
 [[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
 
 
@@ -51,7 +52,7 @@ Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hon
 
 * [Latent Collaboration in Multi-Agent Systems](https://arxiv.org/abs/2511.20639)<br> 
 Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu, Ke Shen, Hanghang Tong, Yejin Choi, Jingrui He, James Zou, Mengdi Wang, Ling Yang<br>
-*Manuscript 2025*<br> 
+*ICML 2026 <span style="color: red;">(spotlight)</span>*<br> 
 [[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/rohanpaul_ai/status/1994608002003853529)]<br>
 
 * [Efficient Inference Scaling for Safety Assurance](https://q-rz.github.io/static/preprint/saffron-paper.pdf)<br> 
