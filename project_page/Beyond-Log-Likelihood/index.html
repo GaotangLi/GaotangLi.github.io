@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Project page for Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum.">
+    <meta property="og:title" content="Beyond Log Likelihood">
+    <meta property="og:description" content="Probability-based objectives for supervised fine-tuning across the model capability continuum.">
+    <meta property="og:image" content="./static/images/capability-continuum.png">
+    <title>Beyond Log Likelihood</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/index.css?v=2">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+  </head>
+
+  <body>
+    <section class="hero publication-header">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <div class="venue-tag">ICML 2026 Spotlight</div>
+              <h1 class="title is-1 publication-title">
+                Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum
+              </h1>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://gaotangli.github.io/" target="_blank" rel="noopener noreferrer">Gaotang Li</a><sup>*</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://q-rz.github.io/" target="_blank" rel="noopener noreferrer">Ruizhong Qiu</a><sup>*</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://xiusic.github.io/" target="_blank" rel="noopener noreferrer">Xiusi Chen</a><sup>*</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://blender.cs.illinois.edu/hengji/research.html" target="_blank" rel="noopener noreferrer">Heng Ji</a>,
+                </span>
+                <span class="author-block">
+                  <a href="http://tonghanghang.org/" target="_blank" rel="noopener noreferrer">Hanghang Tong</a>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">University of Illinois Urbana-Champaign</span>
+              </div>
+
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2510.00526" target="_blank" rel="noopener noreferrer" class="external-link button is-normal is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="./static/pdfs/beyond-log-likelihood.pdf" target="_blank" rel="noopener noreferrer" class="external-link button is-normal is-dark">
+                    <span class="icon"><i class="fas fa-download"></i></span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/GaotangLi/Beyond-Log-Likelihood" target="_blank" rel="noopener noreferrer" class="external-link button is-normal is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/collections/gaotang/beyond-log-likelihood" target="_blank" rel="noopener noreferrer" class="external-link button is-normal is-dark">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span>Data</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#poster" class="external-link button is-normal is-dark">
+                    <span class="icon"><i class="fas fa-image"></i></span>
+                    <span>Poster</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="./static/images/capability-continuum.png" alt="The model capability continuum connects model-strong tasks to prior-leaning objectives and model-weak tasks to NLL." class="teaser-image">
+          <h2 class="subtitle has-text-centered">
+            The right SFT objective depends on how much useful prior knowledge the base model already has.
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Supervised fine-tuning (SFT) is the standard approach for post-training large language models, yet it often shows limited generalization. We trace this limitation to its default training objective: negative log likelihood (NLL). While NLL is classically optimal when training from scratch, post-training operates in a different paradigm where models already encode task-relevant priors and supervision can be long and noisy.
+              </p>
+              <p>
+                We systematically study probability-based objectives and characterize when and why different objectives succeed or fail. Across 8 model backbones, 27 benchmarks, and 7 domains, we uncover a model-capability continuum: near the model-strong end, prior-leaning objectives that downweight low-probability tokens consistently outperform NLL; toward the model-weak end, NLL dominates; in between, no single objective prevails.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">Why look beyond NLL?</h2>
+            <div class="content has-text-justified">
+              <p>
+                Standard SFT with <strong>-log p</strong> gives the largest gradient to tokens the model currently assigns low probability. That is natural when training from scratch: low probability usually means the model has not learned the concept yet.
+              </p>
+              <p>
+                Post-training is different. A pretrained LLM may already know much of the target task, while long chain-of-thought demonstrations can contain noisy, redundant, or locally unreliable tokens. In those cases, blindly forcing the model to imitate every low-probability token can damage an otherwise useful prior.
+              </p>
+            </div>
+            <div class="contrast-grid">
+              <div class="contrast-item">
+                <div class="contrast-kicker">Prior-Averse</div>
+                <h3>-log p</h3>
+                <p>Emphasizes low-probability tokens and broadly corrects weak or misaligned priors.</p>
+              </div>
+              <div class="contrast-item accent">
+                <div class="contrast-kicker">Prior-Leaning</div>
+                <h3>-p, -p<sup>10</sup>, thresholded variants</h3>
+                <p>Emphasizes already plausible tokens and protects reliable model priors from noisy supervision.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-band">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">Probability-based objectives as gradient shape</h2>
+            <p align="center">
+              <img src="./static/images/logit-gradient.png" alt="Logit-gradient weights induced by different probability-based objectives." class="figure-image medium-figure">
+            </p>
+            <div class="content has-text-justified">
+              <p>
+                We study objectives of the form <strong>L<sub>f</sub>(p<sub>&theta;</sub>) = E[f(p<sub>&theta;</sub>(&tilde;y|x))]</strong>. The key object is not just the loss value, but how the objective distributes logit-gradient weight over the model's current probability <strong>p</strong>. NLL is prior-averse because it keeps strong pressure on low-probability tokens. Objectives such as <strong>-p</strong> are prior-leaning because they shift training signal toward tokens the model already considers plausible.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">The model-capability continuum</h2>
+            <div class="regime-grid">
+              <div class="regime-card strong">
+                <h3>Model-Strong</h3>
+                <p>Math and code-like settings where pretraining already provides useful priors.</p>
+                <div class="regime-result">Prior-leaning objectives win.</div>
+              </div>
+              <div class="regime-card middle">
+                <h3>Model-Intermediate</h3>
+                <p>Domains such as medical reasoning where models have partial but unstable knowledge.</p>
+                <div class="regime-result">No fixed objective dominates.</div>
+              </div>
+              <div class="regime-card weak">
+                <h3>Model-Weak</h3>
+                <p>Novel symbolic or low-coverage tasks where the base model has little reliable prior.</p>
+                <div class="regime-result">NLL remains the strong baseline.</div>
+              </div>
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                The continuum is not a task-name taxonomy. It can be diagnosed by pretraining coverage and by measuring how confidently the base model assigns probability to training targets. The same objective can help in one regime and hurt in another.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-band">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">Empirical validation across objectives and regimes</h2>
+            <p align="center">
+              <img src="./static/images/average-performance.png" alt="Average performance comparison across probability-based objectives and percentile thresholds." class="figure-image">
+            </p>
+            <div class="content has-text-justified">
+              <p>
+                Experiments across 8 backbones, 27 benchmarks, and 7 domains show the same pattern: when the base model's prior is reliable, objectives that downweight low-probability tokens can substantially improve generalization. When the model lacks relevant prior knowledge, NLL's strong correction signal is necessary.
+              </p>
+            </div>
+            <p align="center">
+              <img src="./static/images/performance-analysis.png" alt="Model-strong and model-weak settings show opposite likelihood and performance preferences." class="figure-image">
+            </p>
+            <div class="content has-text-justified">
+              <p>
+                The mechanism is visible in likelihood estimation and thresholding analyses: low-probability tokens can be noise against a strong prior, but become crucial corrective signals when the prior is weak.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">A practical rollout for SFT objective selection</h2>
+            <p align="center">
+              <img src="./static/images/objective-rollout.png" alt="A practical objective selection rollout for supervised fine-tuning." class="figure-image rollout-figure">
+            </p>
+            <div class="content has-text-justified">
+              <p>
+                The takeaway is not to replace NLL with a new universal default. Instead, choose the objective according to model capability: estimate the base model's target-token confidence, locate the task on the continuum, and sweep prior-leaning or prior-averse objectives accordingly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-band" id="poster">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title is-3">Poster</h2>
+            <p align="center">
+              <img src="./static/images/poster-preview.png" alt="ICML 2026 poster preview for Beyond Log Likelihood." class="figure-image poster-image">
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+<pre><code>@article{li2025beyond,
+  title={Beyond log likelihood: Probability-based objectives for supervised fine-tuning across the model capability continuum},
+  author={Li, Gaotang and Qiu, Ruizhong and Chen, Xiusi and Ji, Heng and Tong, Hanghang},
+  journal={arXiv preprint arXiv:2510.00526},
+  year={2025}
+}</code></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a>, adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a> project page. This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
