@@ -37,12 +37,12 @@ Selected Papers
 * [RubricEM: Meta-RL with Rubric-guided Policy Decomposition beyond Verifiable Rewards](https://arxiv.org/abs/2605.10899)<br> 
 **Gaotang Li**, Bhavana Dalvi Mishra, Zifeng Wang, Jun Yan, Yanfei Chen, Chun-Liang Li, Long T. Le, Rujun Han, George Lee, Hanghang Tong, Chen-Yu Lee, Tomas Pfister<br>
 *Manuscript 2026*<br> 
-[[PDF](https://arxiv.org/pdf/2605.10899)]<br>
+[[PDF](https://arxiv.org/pdf/2605.10899)] [[Tweet](https://x.com/GaotangLi/status/2056783117919408466)]<br>
 
 * [Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum](https://arxiv.org/abs/2510.00526)<br> 
 **Gaotang Li**\*, Ruizhong Qiu\*, Xiusi Chen\*, Heng Ji, Hanghang Tong<br>
 *ICML 2026 <span style="color: red;">(spotlight)</span>*<br> 
-[[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
+[[PDF](https://arxiv.org/pdf/2510.00526)] [[Code](https://github.com/GaotangLi/Beyond-Log-Likelihood)] [[HuggingFace](https://huggingface.co/collections/gaotang/beyond-log-likelihood)] [[Project Page](https://gaotangli.github.io/project_page/Beyond-Log-Likelihood/)] [[Tweet](https://x.com/GaotangLi/status/1973796366116692292)]<br>
 
 
 * [RM-R1: Reward Modeling as Reasoning](https://arxiv.org/abs/2505.02387)<br> 
