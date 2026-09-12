@@ -14,9 +14,17 @@ About Me
 ======
 ---
 
-I'm a second-year Ph.D. candidate in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. 
+I'm a third-year Ph.D. student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. 
 
-My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My past work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526), [Open-ended RL](https://arxiv.org/abs/2605.10899)), judging ([RM-R1](https://arxiv.org/abs/2505.02387), [Open-ended RL](https://arxiv.org/abs/2605.10899)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through heavy engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning.
+I study how to **scale** large language models to advance their reasoning and agentic capabilities. My research interests lie broadly in language modeling, pre-training, and post-training, with a current focus on **language model architectures**.
+
+<!-- I am broadly interested in **scaling** large language models to advance their reasoning and agentic capabilities. My current research focuses on **language model architectures**. -->
+
+<!-- I am broadly interested in **scaling** large language models toward stronger reasoning and agentic capabilities. My current research interests are **language model architectures**, although I've worked on post-training quite a bit in the past.  -->
+
+<!-- My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. I am interested in language modeling and post-training. -->
+
+<!-- My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My past work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526), [Open-ended RL](https://arxiv.org/abs/2605.10899)), judging ([RM-R1](https://arxiv.org/abs/2505.02387), [Open-ended RL](https://arxiv.org/abs/2605.10899)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through heavy engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning. -->
 
 
 Email: gaotang3 \[at\] illinois [dot] edu 
@@ -57,10 +65,10 @@ Xiusi Chen\*, **Gaotang Li**\*, Ziqi Wang\*, Bowen Jin, Cheng Qian, Yu Wang, Hon
 *ICML 2025 <span style="color: red;">(spotlight)</span>*<br> 
 [[PDF](https://www.arxiv.org/pdf/2503.10996)] [[Code](https://github.com/GaotangLi/JUICE)] [[HuggingFace](https://huggingface.co/collections/gaotang/knowledge-conflict-681408090438726d04c440ca)] [[Project Page](https://gaotangli.github.io/project_page/Taming-Knowledge-Conflict/)] [[Tweet](https://x.com/GaotangLi/status/1918155972050395531)]<br>
 
-* [Latent Collaboration in Multi-Agent Systems](https://arxiv.org/abs/2511.20639)<br> 
+<!-- * [Latent Collaboration in Multi-Agent Systems](https://arxiv.org/abs/2511.20639)<br> 
 Jiaru Zou\*, Xiyuan Yang\*, Ruizhong Qiu, **Gaotang Li**, Katherine Tieu, Pan Lu, Ke Shen, Hanghang Tong, Yejin Choi, Jingrui He, James Zou, Mengdi Wang, Ling Yang<br>
 *ICML 2026 <span style="color: red;">(spotlight)</span>*<br> 
-[[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/rohanpaul_ai/status/1994608002003853529)]<br>
+[[PDF](https://arxiv.org/pdf/2511.20639)] [[Code](https://github.com/Gen-Verse/LatentMAS)] [[Tweet](https://x.com/rohanpaul_ai/status/1994608002003853529)]<br> -->
 
 <!-- * [Efficient Inference Scaling for Safety Assurance](https://q-rz.github.io/static/preprint/saffron-paper.pdf)<br> 
 Ruizhong Qiu\*, **Gaotang Li**\*, Ting-Wei Li\*, Tianxin Wei, Jingrui He, Hanghang Tong<br>
