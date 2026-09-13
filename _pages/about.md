@@ -16,7 +16,7 @@ About Me
 
 I'm a third-year Ph.D. student in Computer Science at University of Illinois Urbana-Champaign, working under the supervision of [Hanghang Tong](http://tonghanghang.org/). Prior to this, I earned my bachelor's degree from the University of Michigan. 
 
-I study how to **scale** large language models to advance their reasoning and agentic capabilities. My research interests lie broadly in language modeling, pre-training, and post-training, with a current focus on **language model architectures**.
+I study how to **scale** large language models to advance their reasoning and agentic capabilities. My research interests lie broadly in language modeling and post-training, with a current focus on **model architectures**.
 
 <!-- I am broadly interested in **scaling** large language models to advance their reasoning and agentic capabilities. My current research focuses on **language model architectures**. -->
 
