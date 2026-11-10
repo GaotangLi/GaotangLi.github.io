@@ -163,22 +163,6 @@ td.formula{font-family:var(--serif);font-style:italic;text-align:left;white-spac
 .bar-row .val{color:var(--muted);font-variant-numeric:tabular-nums;font-size:13.5px;white-space:nowrap}
 .bar-row .val b{color:var(--ink);font-weight:700}
 
-.place{display:grid;gap:10px;font-family:var(--sans);font-size:14.5px;margin-top:10px}
-.place-row{display:grid;grid-template-columns:150px minmax(0,1fr) 48px;gap:10px;align-items:center}
-.dot-track{position:relative;height:18px}
-.dot-track::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--rule)}
-.dot-track.axis{height:16px}.dot-track.axis::before{display:none}
-.dot-mark{position:absolute;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#8C97A6;box-shadow:0 0 0 2px #fff}
-.place-row.ours .dot-mark{background:var(--indigo)}
-.std-tick{position:absolute;top:1px;bottom:1px;width:0;border-left:1.6px dashed var(--ink)}
-.axl{position:absolute;top:0;font-size:12.5px;color:var(--muted);white-space:nowrap}
-.place-row.ours .lab,.place-row.ours .val{font-weight:700;color:var(--slate)}
-.place-row .val{font-variant-numeric:tabular-nums;text-align:right}
-.mini{display:inline-flex;gap:2px;vertical-align:-2px;margin-right:8px}
-.mini i{width:6px;height:12px;border-radius:2px;background:#C9D2DE;display:block}
-.mini i{width:9px}
-.mini i.b{background:#8C97A6;height:5px;box-shadow:0 7px 0 #8C97A6}
-.place-row.ours .mini i.b{background:var(--indigo);box-shadow:0 7px 0 var(--indigo)}
 
 pre{font:400 14px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;overflow-x:auto;margin:0;color:var(--ink)}
 .copy{border:1.5px solid var(--slate);background:transparent;color:var(--slate);font:700 14px/1 var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer}
@@ -212,7 +196,6 @@ footer p{max-width:none;margin:0 0 4px}
   .bar-row{grid-template-columns:88px minmax(0,1fr) 44px;gap:8px;font-size:13.5px}
   .bar-row .range{display:none}
   .fig.pad-lg{padding:16px 12px 14px}
-  .place-row{grid-template-columns:118px minmax(0,1fr) 44px}
   th,td{padding:8px 0 8px 10px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -233,7 +216,6 @@ footer p{max-width:none;margin:0 0 4px}
       <a href="#more-branches">More branches</a>
       <a href="#joint-kv">Joint-KV</a>
       <a href="#final-models">Final models</a>
-      <a href="#ablations">Ablations</a>
       <a href="#cite">Cite</a>
     </nav>
   </div>
@@ -402,7 +384,7 @@ footer p{max-width:none;margin:0 0 4px}
         <p><strong>Joint-KV</strong> has all branches at the same depth construct one shared KV cache from their concatenated inputs, while each branch keeps its own queries. For <em>K</em> branches this cuts cache storage in the branch region to 1/<em>K</em> of independent caches, with the same projection parameters and FLOPs.</p>
         <p>Joint-KV changes the model and is used in training. The inference engine then changes only how the model is executed.</p>
       </div>
-      <video controls muted playsinline preload="metadata" poster="assets/joint-kv-inference-poster.jpg" aria-label="Animation: from independent KV caches to Joint-KV with one grouped attention call">
+      <video controls muted playsinline preload="metadata" poster="assets/joint-kv-inference-poster.jpg" aria-label="Animation: from independent KV caches to Joint-KV with grouped queries, one attention call and one cache read, ending with the measured decoding speedup">
         <source src="assets/joint-kv-inference.mp4" type="video/mp4">
       </video>
     </div>
@@ -469,49 +451,6 @@ footer p{max-width:none;margin:0 0 4px}
       <div class="multiples" id="ch-dec"></div>
       <figcaption>Decode throughput of Balanced Joint-KV MBTs divided by that of Standard, by input length and number of concurrent requests. With short inputs and few requests the gain comes mainly from fewer sequential stages; as context and concurrency grow, KV reads dominate and the gain approaches the KV-read saving.</figcaption>
     </figure>
-  </div>
-</section>
-
-<section id="ablations">
-  <div class="wrap stack">
-    <div class="two wide-right">
-      <h2>What the ablations show</h2>
-      <p class="lede">Three controlled studies ask whether the gain is really from branching, and how sensitive it is to the remaining design choices.</p>
-    </div>
-    <div class="two wide-left">
-      <figure class="fig">
-        <div class="fig-head"><div><h3>Branching is not just a wider, shallower network</h3><p class="subh">Loss against training body compute, with fitted power laws</p></div></div>
-        <ul class="legend" id="lg-wd"></ul>
-        <div class="chart" id="ch-wd"></div>
-        <figcaption>Two sequential controls widen the network to the same depth as the Wide–Shallow MBT, either everywhere or only in the middle. Neither recovers its gains. A Narrow–Deep MBT that keeps Standard's full depth also beats Standard at every scale and has the steepest fitted exponent.</figcaption>
-      </figure>
-      <div class="stack">
-        <figure class="fig">
-          <h3>Branch in the middle</h3>
-          <p class="subh">2-branch Wide–Shallow MBT at W3, 8 of 16 blocks in branches</p>
-          <div class="place" id="place"></div>
-          <figcaption>Validation loss by where the parallel region sits. Standard, with no branches, reaches 2.471.</figcaption>
-        </figure>
-        <figure class="fig">
-          <h3>Fusion choice barely matters</h3>
-          <p class="subh">Same W3 model, changing only the fusion operator</p>
-          <div class="tbl-scroll">
-          <table>
-            <thead><tr><th>Fusion</th><th>Loss</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Concat–projection (ours)</strong></td><td class="best">2.445</td></tr>
-              <tr><td>Channel competition</td><td>2.446</td></tr>
-              <tr><td>Joint MLP</td><td>2.445</td></tr>
-              <tr><td>Low-rank bilinear</td><td>2.446</td></tr>
-              <tr><td>Joint SwiGLU</td><td>2.444</td></tr>
-              <tr><td>Token softmax</td><td>2.448</td></tr>
-            </tbody>
-          </table>
-          </div>
-          <figcaption>Six operators span less than 0.005 in loss, so we keep the simplest one.</figcaption>
-        </figure>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -844,38 +783,6 @@ mbRender();
       series:[ser('2 branches',KC[2],d.k2),ser('3 branches',KC[3],d.k3),ser('4 branches',KC[4],d.k4)],
       tip:function(p,s){return '<b>'+s.name+'</b>, '+d.len+'<br>'+p.n+' concurrent: '+fmt(p.y,2)+'× Standard';}});
   });
-})();
-
-/* ---------- chart: width/depth ablation ---------- */
-(function(){
-  var WD={
-   'Standard':{pts:[[0.3665,2.6529],[0.7746,2.5535],[1.5032,2.4710],[2.7265,2.3921]],fit:[2.52043,0.05134]},
-   'Global wide–shallow (sequential)':{pts:[[0.3721,2.6607],[0.7894,2.5522],[1.5190,2.4737],[2.7511,2.3969]],fit:[2.52571,0.05180]},
-   'Local wide-core (sequential)':{pts:[[0.3636,2.6376],[0.7707,2.5453],[1.5062,2.4578],[2.7478,2.3817]],fit:[2.50849,0.05058]},
-   'Wide–Shallow MBT':{pts:[[0.3706,2.6296],[0.7822,2.5332],[1.5164,2.4455],[2.7482,2.3728]],fit:[2.49950,0.05147]},
-   'Narrow–Deep MBT':{pts:[[0.3705,2.6406],[0.7817,2.5296],[1.5155,2.4479],[2.7396,2.3635]],fit:[2.49962,0.05484]}};
-  var st={'Standard':[C.ink,'square',true,true],'Global wide–shallow (sequential)':['#A8903F','diamond',false,true],'Local wide-core (sequential)':['#8C97A6','triangle',false,true],'Wide–Shallow MBT':[C.indigo,'circle',false,false],'Narrow–Deep MBT':[C.purple,'circle',false,false]};
-  var series=Object.keys(WD).map(function(n){return fitSeries(n,st[n][0],WD[n],{shape:st[n][1],dash:st[n][2],hollow:st[n][3],r:3.8});});
-  legend(document.getElementById('lg-wd'),series);
-  chart(document.getElementById('ch-wd'),{aria:'Validation loss against training body compute for Standard, two wider sequential controls, and Wide–Shallow and Narrow–Deep 2-branch MBTs. Both MBTs lie below the sequential models.',
-    x:LOGX,y:LOSSY,series:series,
-    tip:function(p,s){return '<b>'+s.name+'</b>, '+p.scale+'<br>loss '+fmt(p.y,3)+' at '+fmt(p.x,3)+' PFLOP-days';}});
-})();
-
-/* ---------- bars: branch placement ---------- */
-(function(){
-  var rows=[['Early','bss',2.458,false],['Middle (ours)','sbs',2.445,true],['Late','ssb',2.464,false]];
-  var lo=2.440,hi=2.475,std=2.471,root=document.getElementById('place');
-  function pos(v){return ((v-lo)/(hi-lo)*100)+'%';}
-  rows.forEach(function(r){
-    var row=h('div','place-row'+(r[3]?' ours':''),root),lab=h('div','lab',row),mini=h('span','mini',lab);
-    r[1].split('').forEach(function(ch){h('i',ch==='b'?'b':'',mini);});
-    lab.appendChild(document.createTextNode(r[0]));
-    var tr=h('div','dot-track',row);h('span','std-tick',tr).style.left=pos(std);h('span','dot-mark',tr).style.left=pos(r[2]);
-    h('div','val',row,fmt(r[2],3));
-  });
-  var ax=h('div','place-row place-axis',root);h('div','',ax);var t=h('div','dot-track axis',ax);
-  h('span','axl',t,'2.440').style.left='0';var sl=h('span','axl',t,'Standard 2.471');sl.style.left=pos(std);sl.style.transform='translateX(-50%)';h('div','',ax);
 })();
 
 /* ---------- copy bibtex ---------- */
