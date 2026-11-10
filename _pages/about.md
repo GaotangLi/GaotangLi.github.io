@@ -18,12 +18,6 @@ I'm a third-year Ph.D. student in Computer Science at University of Illinois Urb
 
 I study how to **scale** large language models to advance their reasoning and agentic capabilities. My research interests lie broadly in language modeling and post-training, with a current focus on **model architectures**.
 
-<!-- I am broadly interested in **scaling** large language models to advance their reasoning and agentic capabilities. My current research focuses on **language model architectures**. -->
-
-<!-- I am broadly interested in **scaling** large language models toward stronger reasoning and agentic capabilities. My current research interests are **language model architectures**, although I've worked on post-training quite a bit in the past.  -->
-
-<!-- My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. I am interested in language modeling and post-training. -->
-
 <!-- My current research interests center on **scaling** foundation models toward stronger reasoning and agentic capabilities. My past work spans a broad spectrum of **post-training**, including learning ([SFT-loss](https://arxiv.org/abs/2510.00526), [Open-ended RL](https://arxiv.org/abs/2605.10899)), judging ([RM-R1](https://arxiv.org/abs/2505.02387), [Open-ended RL](https://arxiv.org/abs/2605.10899)), and inferencing ([JuICE](https://www.arxiv.org/abs/2503.10996)). I am especially drawn to two complementary research styles: (1) conducting deep analysis to uncover new insights that challenge established conventions, and (2) training larger and more capable models through heavy engineering. More recently, I have also become interested in language modeling and new paradigms for model reasoning. -->
 
 

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Branch Transformer</title>
+<meta name="description" content="Multi-Branch Transformer (MBT): scaling language models through parallel branches of full Transformer blocks. Lower validation loss at matched training compute, and faster decoding with Joint-KV.">
+<meta property="og:title" content="Multi-Branch Transformer">
+<meta property="og:description" content="Scaling language models through parallel branches of full Transformer blocks.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/mbt-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F5F6F8; --panel:#FFFFFF; --ink:#22252B; --slate:#263B66; --muted:#5B6870; --rule:#DCE1E7;
+  --indigo:#4362C7; --teal:#195E69; --purple:#995692; --kv:#3D9D93;
+  --shared-fill:#DCE5EE; --shared-stroke:#8497B0;
+  --sans:"Avenir Next","Avenir","Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Source Serif 4","Iowan Old Style","Charter",Georgia,serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,video,svg{max-width:100%;display:block}
+img{height:auto}
+a{color:var(--indigo);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+h1,h2,h3,.ui,nav,button,figcaption,table,.readout,.legend,.tip{font-family:var(--sans)}
+h1,h2,h3{color:var(--slate);margin:0;text-wrap:balance}
+p{margin:0 0 1em;max-width:68ch}
+strong{font-weight:600}
+
+/* nav */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,246,248,.88);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex;align-items:center;gap:28px;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font:700 16px/1 var(--sans);color:var(--slate);text-decoration:none;white-space:nowrap}
+.brand img{width:34px;height:auto}
+.topbar nav{display:flex;gap:22px;margin-left:auto;font-size:14.5px;overflow-x:auto;scrollbar-width:none}
+.topbar nav::-webkit-scrollbar{display:none}
+.topbar nav a{color:var(--muted);text-decoration:none;white-space:nowrap;padding:6px 0}
+.topbar nav a:hover{color:var(--slate)}
+
+/* hero */
+.hero{padding:64px 0 72px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,10fr) minmax(0,11fr);gap:48px;align-items:start}
+h1{font-size:clamp(40px,5.3vw,70px);line-height:1;letter-spacing:-.025em;font-weight:800}
+h1 span{white-space:nowrap}
+.tagline{font:400 clamp(20px,2.1vw,25px)/1.3 var(--sans);color:var(--teal);margin:22px 0 30px;max-width:22ch}
+.authors{font:600 16px/1.7 var(--sans);color:var(--ink);margin:0;max-width:none}
+.authors a{color:inherit;text-decoration-color:var(--rule)}
+.authors span{white-space:nowrap}
+.authors sup,.affil sup{font-weight:400;font-size:.68em;color:var(--muted);margin-left:1px}
+.affil{font:400 14.5px/1.7 var(--sans);color:var(--muted);margin:8px 0 0;max-width:none}
+.affil span{white-space:nowrap;margin-right:14px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font:700 15.5px/1 var(--sans);text-decoration:none;border:1.5px solid var(--slate);color:var(--slate);background:transparent}
+.btn.primary{background:var(--slate);color:#fff}
+.btn:hover{background:var(--slate);color:#fff}
+.btn.primary:hover{background:#1B2B4D}
+.btn.soon{border-style:dashed;border-color:#9AA6B2;color:var(--muted);cursor:default}
+.btn.soon:hover{background:transparent;color:var(--muted)}
+.btn small{font-weight:400;font-size:13px;opacity:.85}
+
+/* explorer */
+.explorer{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:22px 22px 18px}
+.explorer h2{font-size:16px;font-weight:700;margin-bottom:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+.ctl{display:flex;align-items:center;gap:10px;font:400 14px/1 var(--sans);color:var(--muted)}
+.seg{display:inline-flex;background:var(--bg);border-radius:10px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;font:600 14px/1 var(--sans);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer;min-width:40px}
+.seg button:hover{color:var(--slate)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--slate);box-shadow:0 0 0 1px var(--rule),0 1px 2px rgba(38,59,102,.10)}
+#diagram{width:100%;height:auto;margin:14px 0 4px}
+#diagram text{font-family:var(--sans)}
+.blk{opacity:0;animation:pop .32s ease-out forwards}
+@keyframes pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted);margin:0 0 14px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:7px}
+.sw{display:inline-block;width:13px;height:13px;border-radius:3.5px;border:1.5px solid}
+.sw.line{width:20px;height:0;border-radius:0;border-width:0;border-top-width:2.5px}
+.sw.dash{border-top-style:dashed}
+.readouts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);margin:0}
+.readout{padding:14px 12px 4px 0}
+.readout + .readout{padding-left:14px;border-left:1px solid var(--rule)}
+.readout dt{font-size:13px;color:var(--muted);line-height:1.3;min-height:2.6em;display:flex;align-items:flex-end}
+.readout dd{margin:4px 0 0;font-size:24px;font-weight:700;color:var(--slate);line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.readout dd small{font-size:14px;font-weight:600;margin-left:1px}
+.readout .sub{display:block;min-height:2.7em;font-size:13px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.35;white-space:normal}
+.readout .sub b{font-weight:700;color:var(--teal)}
+.note{font:400 13.5px/1.5 var(--sans);color:var(--muted);margin:12px 0 0;max-width:none}
+
+/* sections */
+section{padding:76px 0;border-top:1px solid var(--rule)}
+section.brief{background:var(--panel)}
+h2{font-size:clamp(28px,3.2vw,38px);line-height:1.12;letter-spacing:-.015em;font-weight:800;margin-bottom:18px;max-width:24ch}
+h3{font-size:19px;font-weight:700;line-height:1.3;margin-bottom:8px}
+.lede{font-size:19px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+.two.wide-left{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.two.wide-right{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.stack > * + *{margin-top:40px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:10px}
+.three p{margin:0}
+figure{margin:0}
+.fig{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:20px 20px 16px}
+.fig.pad-lg{padding:26px 28px 20px}
+.fig h3{font-size:16px;margin-bottom:2px}
+.fig .subh{font:400 13.5px/1.4 var(--sans);color:var(--muted);margin:0 0 10px;max-width:none}
+figcaption{font-size:14px;line-height:1.5;color:var(--muted);margin-top:12px;max-width:78ch}
+.fig-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 18px;margin-bottom:6px}
+video{width:100%;height:auto;border-radius:10px;background:#EEF1F5;border:1px solid var(--rule)}
+
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:34px 0 0;border-top:1px solid var(--rule)}
+.facts > div{padding:20px 24px 0 0}
+.facts > div + div{padding-left:24px;border-left:1px solid var(--rule)}
+.facts dt{font:800 clamp(34px,4vw,48px)/1 var(--sans);color:var(--slate);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.facts dt small{font-size:16px;font-weight:600;letter-spacing:0;color:var(--muted);margin-right:4px}
+.facts dd{margin:10px 0 0;font:400 15.5px/1.45 var(--sans);color:var(--muted);max-width:30ch}
+
+.points{list-style:none;margin:0;padding:0;font-family:var(--sans);font-size:16px;line-height:1.5}
+.points li{padding:14px 0;border-top:1px solid var(--rule)}
+.points li:last-child{border-bottom:1px solid var(--rule)}
+.points b{display:block;font-size:22px;font-weight:800;color:var(--slate);line-height:1.2;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.points span{color:var(--muted)}
+
+/* tables */
+.tbl-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 0 9px 14px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+thead th{font-weight:600;color:var(--muted);font-size:13.5px;border-bottom:1.5px solid var(--slate);vertical-align:bottom}
+tbody td{border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+td .saved{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+td.best{font-weight:800;color:var(--slate)}
+td.formula{font-family:var(--serif);font-style:italic;text-align:left;white-space:normal}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
+
+/* charts */
+.chart{position:relative;width:100%}
+.chart svg{overflow:visible;font-family:var(--sans)}
+.chart .tick{font-size:12.5px;fill:var(--muted)}
+.chart .axis-label{font-size:13px;fill:var(--muted)}
+.chart .anno{font-size:12.5px;fill:var(--slate);font-weight:600}
+.chart .endlabel{font-size:12.5px;font-weight:700;fill:var(--ink)}
+.tip{position:absolute;pointer-events:none;background:var(--slate);color:#fff;font-size:13px;line-height:1.45;padding:8px 11px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-100%);margin-top:-12px;opacity:0;transition:opacity .1s;z-index:5}
+.tip b{font-weight:700}
+.tip.on{opacity:1}
+.multiples{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.multiples h4{font:700 13.5px/1 var(--sans);color:var(--slate);margin:0 0 4px 34px}
+
+.bars{font-family:var(--sans);font-size:14.5px;display:grid;gap:7px;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:92px minmax(0,1fr) 118px;align-items:center;gap:10px}
+.bar-row .lab{color:var(--ink)}
+.bar-track{height:14px;position:relative}
+.bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--indigo);border-radius:0 4px 4px 0;min-width:2px}
+.bar-row .val{color:var(--muted);font-variant-numeric:tabular-nums;font-size:13.5px;white-space:nowrap}
+.bar-row .val b{color:var(--ink);font-weight:700}
+
+.place{display:grid;gap:10px;font-family:var(--sans);font-size:14.5px;margin-top:10px}
+.place-row{display:grid;grid-template-columns:150px minmax(0,1fr) 48px;gap:10px;align-items:center}
+.dot-track{position:relative;height:18px}
+.dot-track::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--rule)}
+.dot-track.axis{height:16px}.dot-track.axis::before{display:none}
+.dot-mark{position:absolute;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#8C97A6;box-shadow:0 0 0 2px #fff}
+.place-row.ours .dot-mark{background:var(--indigo)}
+.std-tick{position:absolute;top:1px;bottom:1px;width:0;border-left:1.6px dashed var(--ink)}
+.axl{position:absolute;top:0;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.place-row.ours .lab,.place-row.ours .val{font-weight:700;color:var(--slate)}
+.place-row .val{font-variant-numeric:tabular-nums;text-align:right}
+.mini{display:inline-flex;gap:2px;vertical-align:-2px;margin-right:8px}
+.mini i{width:6px;height:12px;border-radius:2px;background:#C9D2DE;display:block}
+.mini i{width:9px}
+.mini i.b{background:#8C97A6;height:5px;box-shadow:0 7px 0 #8C97A6}
+.place-row.ours .mini i.b{background:var(--indigo);box-shadow:0 7px 0 var(--indigo)}
+
+pre{font:400 14px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;overflow-x:auto;margin:0;color:var(--ink)}
+.copy{border:1.5px solid var(--slate);background:transparent;color:var(--slate);font:700 14px/1 var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer}
+.copy:hover{background:var(--slate);color:#fff}
+footer{border-top:1px solid var(--rule);padding:32px 0 56px;font:400 14px/1.6 var(--sans);color:var(--muted)}
+footer p{max-width:none;margin:0 0 4px}
+
+@media (max-width:960px){
+  .hero{padding:40px 0 52px}
+  .hero-grid,.two,.two.wide-left,.two.wide-right{grid-template-columns:minmax(0,1fr);gap:36px}
+  .three{grid-template-columns:minmax(0,1fr);gap:16px}
+  .tagline{max-width:none}
+  section{padding:56px 0}
+  .multiples{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 8px}
+}
+@media (max-width:640px){
+  body{font-size:17px}
+  .readout dt{min-height:0}
+  .readout .sub{min-height:0}
+  .wrap{padding:0 18px}
+  .topbar .wrap{gap:16px}
+  .brand span{display:none}
+  .explorer{padding:16px 14px 14px;border-radius:14px}
+  .readouts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .readout:nth-child(3){padding-left:0;border-left:0}
+  .readout:nth-child(n+3){border-top:1px solid var(--rule)}
+  .readout dd{font-size:21px}
+  .facts{grid-template-columns:minmax(0,1fr)}
+  .facts > div + div{padding-left:0;border-left:0;border-top:1px solid var(--rule);margin-top:20px}
+  .fig{padding:16px 14px 14px}
+  .bar-row{grid-template-columns:88px minmax(0,1fr) 44px;gap:8px;font-size:13.5px}
+  .bar-row .range{display:none}
+  .fig.pad-lg{padding:16px 12px 14px}
+  .place-row{grid-template-columns:118px minmax(0,1fr) 44px}
+  th,td{padding:8px 0 8px 10px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .blk{animation:none;opacity:1}
+  .tip{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/mbt-icon.svg" alt="" width="34" height="21"><span>Multi-Branch Transformer</span></a>
+    <nav aria-label="Sections">
+      <a href="#architecture">Architecture</a>
+      <a href="#two-branches">Two branches</a>
+      <a href="#more-branches">More branches</a>
+      <a href="#joint-kv">Joint-KV</a>
+      <a href="#final-models">Final models</a>
+      <a href="#ablations">Ablations</a>
+      <a href="#cite">Cite</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1><span>Multi-Branch</span> <span>Transformer</span></h1>
+      <p class="tagline">Scaling language models through parallel branches.</p>
+      <p class="authors">
+        <span><a href="https://gaotangli.github.io/">Gaotang Li</a><sup>1,*,†</sup>,</span>
+        <span>Lingjie Chen<sup>1,†</sup>,</span>
+        <span>Chunyuan Deng<sup>2,†</sup>,</span>
+        <span>Zhiwei Xu<sup>3,†</sup>,</span>
+        <span>Hongzheng Chen<sup>4,†</sup>,</span>
+        <span>Jingrui He<sup>1</sup>,</span>
+        <span>Yingheng Wang<sup>4,†,§</sup>,</span>
+        <span><a href="http://tonghanghang.org/">Hanghang Tong</a><sup>1,§</sup></span>
+      </p>
+      <p class="affil">
+        <span><sup>1</sup>University of Illinois Urbana-Champaign</span>
+        <span><sup>2</sup>Rice University</span>
+        <span><sup>3</sup>University of Michigan</span>
+        <span><sup>4</sup>Cornell University</span>
+      </p>
+      <p class="affil">
+        <span><sup>*</sup>Project lead</span>
+        <span><sup>†</sup>Core contributors</span>
+        <span><sup>§</sup>Last authors</span>
+      </p>
+      <div class="links">
+        <span class="btn soon" title="The arXiv link will be added at release">Paper <small>arXiv link soon</small></span>
+        <a class="btn primary" href="https://github.com/GaotangLi/Multi-Branch-Transformer">Code</a>
+        <a class="btn" href="https://huggingface.co/collections/gaotang/multi-branch-transformer">Models</a>
+      </div>
+    </div>
+
+    <div class="explorer" aria-labelledby="explorer-title">
+      <h2 id="explorer-title">Explore the final models</h2>
+      <div class="controls">
+        <div class="ctl"><span id="lab-scale">Scale</span>
+          <div class="seg" id="seg-scale" role="group" aria-labelledby="lab-scale"></div>
+        </div>
+        <div class="ctl"><span id="lab-k">Branches</span>
+          <div class="seg" id="seg-k" role="group" aria-labelledby="lab-k"></div>
+        </div>
+      </div>
+      <svg id="diagram" viewBox="0 0 640 250" role="img" aria-live="polite"></svg>
+      <ul class="legend">
+        <li><span class="sw" style="background:var(--shared-fill);border-color:var(--shared-stroke)"></span>Shared block</li>
+        <li><span class="sw" id="sw-branch" style="background:#E3E8F7;border-color:var(--indigo)"></span>Branch block</li>
+        <li><span class="sw" style="background:rgba(61,157,147,.12);border-color:var(--kv)"></span>One shared KV cache per depth</li>
+      </ul>
+      <dl class="readouts">
+        <div class="readout"><dt>Sequential depth</dt><dd id="r-depth"></dd></div>
+        <div class="readout"><dt>Validation loss</dt><dd id="r-loss"></dd></div>
+        <div class="readout"><dt>KV cache per token</dt><dd id="r-kv"></dd></div>
+        <div class="readout"><dt>Decode throughput</dt><dd id="r-tps"></dd></div>
+      </dl>
+      <p class="note">Balanced MBTs with Joint-KV, as trained in the paper. A token moves left to right, and blocks in one column run as one stage. Block height is proportional to residual width. Throughput is total output tokens per second on one H200 with 16K-token inputs and 64 concurrent requests.</p>
+    </div>
+  </div>
+</div>
+
+<section class="brief" id="brief">
+  <div class="wrap">
+    <div class="two wide-left">
+      <div>
+        <h2>A third way to scale, next to width and depth</h2>
+        <p class="lede">Transformer language models are usually scaled by making their blocks wider or by stacking more of them. We study a complementary option, <strong>branching</strong>: the parallel composition of full Transformer blocks.</p>
+        <p>A Multi-Branch Transformer (MBT) runs the input through a few shared blocks, splits into independently parameterized branches that each remain a sequence of full blocks, fuses the branch outputs, and finishes with shared blocks. Every token passes through every branch.</p>
+        <p>In controlled pretraining at four mixture-of-experts scales, from 0.8B to 2.1B total parameters, MBTs reach lower validation loss than sequential Transformers at comparable training compute. With Joint-KV cache sharing and an inference engine that exploits the branch structure, they also decode faster.</p>
+      </div>
+      <video controls muted playsinline preload="metadata" poster="assets/architecture-poster.jpg" aria-label="Animation: how a standard Transformer is reorganized into Wide–Shallow, Narrow–Deep and Balanced MBTs">
+        <source src="assets/architecture.mp4" type="video/mp4">
+      </video>
+    </div>
+    <dl class="facts">
+      <div><dt><small>up to</small> 1.26×</dt><dd>the training body compute a standard Transformer needs to match our final models' validation loss, from fitted scaling curves</dd></div>
+      <div><dt><small>up to</small> 34%</dt><dd>less KV-cache storage for the full model, across the evaluated configurations</dd></div>
+      <div><dt><small>up to</small> 51.4%</dt><dd>higher decoding throughput on a single H200 GPU, with the same serving engine for both models</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap stack">
+    <div class="two wide-right">
+      <h2>Three ways to spend the same compute on branches</h2>
+      <div>
+      <p>The shared initial and final blocks, the <em>prelude</em> and <em>coda</em>, stay as they are. The middle of the stack becomes <em>K</em> branches. At each token position the branch outputs are normalized, concatenated, and projected back to the shared width; that one linear map is the whole fusion step.</p>
+      <p>Relative to a standard Transformer at comparable training compute, there are three natural allocations. Wide–Shallow keeps the original block width and redistributes the middle blocks across branches. Narrow–Deep keeps the original sequential depth along each branch and narrows the blocks. Balanced sits between the two, adjusting branch width and depth together.</p>
+      </div>
+    </div>
+    <figure class="fig pad-lg">
+      <img src="assets/width-depth.svg" alt="A six-block standard Transformer A to F next to its Wide–Shallow MBT (two blocks per branch, original width), Narrow–Deep MBT (four narrower blocks per branch) and Balanced MBT (three blocks per branch, intermediate width)." width="1000" height="366">
+      <figcaption>A six-block Transformer, A to F, reorganized with two branches. A and F remain shared; the middle blocks are redistributed (Wide–Shallow), duplicated at reduced width (Narrow–Deep), or replaced by three intermediate-width blocks per branch (Balanced).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="two-branches">
+  <div class="wrap stack">
+    <div class="two wide-left">
+      <div>
+        <h2>How much of the stack can run in parallel?</h2>
+        <p>We start with two Wide–Shallow branches, where parameters and training FLOPs stay almost identical to the standard model, and sweep the fraction of blocks placed in the branches from 0% (standard) to 100% (fully branched).</p>
+        <p>All four scales trace the same U-shaped curve. The lowest loss sits near one third of the blocks, 0.025 to 0.031 below Standard. Loss then rises slowly and only returns to Standard's level when close to four fifths of the blocks are in parallel.</p>
+      </div>
+      <ul class="points">
+        <li><b>about 1/3</b><span>of blocks in two branches gives the lowest loss (28.6% to 37.5% across scales)</span></li>
+        <li><b>78% to 80%</b><span>of blocks in branches still matches Standard, estimated by interpolation</span></li>
+        <li><b>1.23×</b><span>body compute for Standard to match the best 2-branch MBTs, from fitted curves</span></li>
+      </ul>
+    </div>
+    <div class="two wide-left">
+      <figure class="fig">
+        <div class="fig-head">
+          <div><h3>Two-branch allocation across scales</h3><p class="subh">Validation loss relative to the same-scale Standard; lower is better</p></div>
+          <ul class="legend" id="lg-ratio"></ul>
+        </div>
+        <div class="chart" id="ch-ratio"></div>
+        <figcaption>Each curve is one scale; each point adds one block to both branches. Values are the paper's final validation losses minus the same-scale Standard loss.</figcaption>
+      </figure>
+      <figure class="fig">
+        <h3>Gains on all nine zero-shot tasks</h3>
+        <p class="subh">Accuracy gain in percentage points, averaged over W1 to W4</p>
+        <div class="bars" id="bars-tasks"></div>
+        <figcaption>Selected 2-branch Wide–Shallow MBTs against Standard. Mean accuracy over the nine tasks rises from 54.23% to 56.03%.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="more-branches">
+  <div class="wrap">
+    <div class="two wide-right">
+      <div>
+        <h2>From two branches to four</h2>
+        <p>Do the gains survive more branches? We keep half of the blocks in the shared prelude and coda and reorganize the middle into 2, 3, or 4 branches, in both Wide–Shallow and Balanced form, at matched training compute.</p>
+        <p>Going from 2 to 3 or 4 branches changes validation loss by less than 0.006 on average, and every configuration stays below Standard. Balanced MBTs are better than their Wide–Shallow counterparts at every scale and branch count, with a lower fitted curve throughout.</p>
+        <p>More branches therefore expose more parallelism at essentially the same quality, and how width and depth are divided inside the branches matters.</p>
+      </div>
+      <figure class="fig">
+        <div class="fig-head">
+          <div><h3>Loss against training body compute</h3><p class="subh">Points are trained models at W1 to W4; lines are fitted power laws</p></div>
+          <div class="ctl"><span id="lab-mb">Branches</span><div class="seg" id="seg-mb" role="group" aria-labelledby="lab-mb"></div></div>
+        </div>
+        <ul class="legend" id="lg-mb"></ul>
+        <div class="chart" id="ch-mb"></div>
+        <figcaption>Independent-KV models. Body compute is in PFLOP-days on a log axis. Standard uses the same learning rate as the MBTs at each scale.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="joint-kv">
+  <div class="wrap stack">
+    <div class="two">
+      <div>
+        <h2>Joint-KV: one cache per depth, shared by all branches</h2>
+        <p>By default every block in every branch builds its own keys and values, so more branches mean more KV caches. At long contexts, reading those caches dominates decoding time.</p>
+        <p><strong>Joint-KV</strong> has all branches at the same depth construct one shared KV cache from their concatenated inputs, while each branch keeps its own queries. For <em>K</em> branches this cuts cache storage in the branch region to 1/<em>K</em> of independent caches, with the same projection parameters and FLOPs.</p>
+        <p>Joint-KV changes the model and is used in training. The inference engine then changes only how the model is executed.</p>
+      </div>
+      <video controls muted playsinline preload="metadata" poster="assets/joint-kv-inference-poster.jpg" aria-label="Animation: from independent KV caches to Joint-KV with one grouped attention call">
+        <source src="assets/joint-kv-inference.mp4" type="video/mp4">
+      </video>
+    </div>
+    <figure class="fig pad-lg">
+      <img src="assets/joint-kv.svg" alt="Independent-KV projects a separate KV cache from each branch input. Joint-KV concatenates the branch inputs and projects them into one shared KV cache that both branch attentions read, while queries stay per branch." width="1000" height="367">
+      <figcaption>KV-cache construction at one branch depth. Independent-KV builds a separate cache from each branch input. Joint-KV projects the concatenated branch inputs into one shared cache and keeps branch-local queries.</figcaption>
+    </figure>
+    <div>
+      <h3>An engine that uses the branch structure</h3>
+      <div class="three">
+        <p>Our engine, built on nano-vLLM, serves Standard and MBTs with the same kernels and cache manager. Two mechanisms turn the branch structure and the shared caches into faster decoding.</p>
+        <p><strong>Branch grouping</strong> runs same-depth blocks of all branches as one batched stage, so the number of sequential stages equals the model's depth, not its block count. A 4-branch W3 model has 24 blocks but needs 12 stages, against 16 for Standard.</p>
+        <p><strong>Head folding</strong> folds the branch dimension into the query-head dimension, so all branches read the shared cache in a single grouped-query attention call. Each query head keeps its own softmax.</p>
+      </div>
+    </div>
+    <figure class="fig pad-lg">
+      <img src="assets/system-design.svg" alt="Three panels. Branch grouping: 24 naive steps become 12. KV sharing: 16 independent KV banks become 4 joint banks. Head folding: 4 reads of the bank become 1." width="1000" height="260">
+      <figcaption>Naive versus optimized serving for a 4-branch MBT at scale W3.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="final-models">
+  <div class="wrap stack">
+    <div class="two wide-left">
+      <div>
+        <h2>Final models: lower loss and faster decoding</h2>
+        <p>Our final recipe combines Balanced MBTs with Joint-KV. We trained it with 2, 3, and 4 branches at all four scales. All 12 models reach lower validation loss than the same-scale Standard while storing a smaller KV cache, and Joint-KV tracks independent caches closely.</p>
+        <p>At a validation loss of 2.5, the fitted Standard curve needs 1.26×, 1.18×, and 1.16× the training body compute of the 2-, 3-, and 4-branch final models. Averaged over scales and nine zero-shot tasks, they score 55.92%, 55.56%, and 55.47%, against 54.23% for Standard.</p>
+      </div>
+      <ul class="points">
+        <li><b>12 of 12</b><span>final models beat the same-scale Standard in validation loss</span></li>
+        <li><b>19% to 34%</b><span>smaller full-model KV cache than Standard</span></li>
+        <li><b>1.12× to 1.50×</b><span>decode speedup with 4 branches, averaged over scales, from one 4K request to 16 concurrent 128K requests</span></li>
+      </ul>
+    </div>
+
+    <div class="two">
+      <figure class="fig">
+        <h3>Quality against decoding speed</h3>
+        <p class="subh">Up and to the right is better; marker shape is the scale</p>
+        <ul class="legend" id="lg-pareto"></ul>
+        <div class="chart" id="ch-pareto"></div>
+        <figcaption>Validation perplexity on held-out 4,096-token sequences against decode throughput on one H200 (16K-token inputs, 64 concurrent requests). Lines connect the four scales.</figcaption>
+      </figure>
+      <figure class="fig">
+        <h3>Validation loss and KV-cache saving</h3>
+        <p class="subh">Balanced MBTs with Joint-KV; lower loss is better</p>
+        <div class="tbl-scroll">
+        <table>
+          <thead><tr><th>Scale</th><th>Standard</th><th><span class="dot" style="background:var(--indigo)"></span>2-branch</th><th><span class="dot" style="background:var(--teal)"></span>3-branch</th><th><span class="dot" style="background:var(--purple)"></span>4-branch</th></tr></thead>
+          <tbody id="tb-final"></tbody>
+        </table>
+        </div>
+        <figcaption>Small figures give the theoretical full-model KV-cache saving relative to Standard at the same scale. Bold marks the lowest loss in each row.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="fig">
+      <div class="fig-head">
+        <div><h3>Decode speedup over Standard</h3><p class="subh">Mean over W1 to W4 on one H200; every request generates 1K tokens</p></div>
+        <ul class="legend" id="lg-dec"></ul>
+      </div>
+      <div class="multiples" id="ch-dec"></div>
+      <figcaption>Decode throughput of Balanced Joint-KV MBTs divided by that of Standard, by input length and number of concurrent requests. With short inputs and few requests the gain comes mainly from fewer sequential stages; as context and concurrency grow, KV reads dominate and the gain approaches the KV-read saving.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="ablations">
+  <div class="wrap stack">
+    <div class="two wide-right">
+      <h2>What the ablations show</h2>
+      <p class="lede">Three controlled studies ask whether the gain is really from branching, and how sensitive it is to the remaining design choices.</p>
+    </div>
+    <div class="two wide-left">
+      <figure class="fig">
+        <div class="fig-head"><div><h3>Branching is not just a wider, shallower network</h3><p class="subh">Loss against training body compute, with fitted power laws</p></div></div>
+        <ul class="legend" id="lg-wd"></ul>
+        <div class="chart" id="ch-wd"></div>
+        <figcaption>Two sequential controls widen the network to the same depth as the Wide–Shallow MBT, either everywhere or only in the middle. Neither recovers its gains. A Narrow–Deep MBT that keeps Standard's full depth also beats Standard at every scale and has the steepest fitted exponent.</figcaption>
+      </figure>
+      <div class="stack">
+        <figure class="fig">
+          <h3>Branch in the middle</h3>
+          <p class="subh">2-branch Wide–Shallow MBT at W3, 8 of 16 blocks in branches</p>
+          <div class="place" id="place"></div>
+          <figcaption>Validation loss by where the parallel region sits. Standard, with no branches, reaches 2.471.</figcaption>
+        </figure>
+        <figure class="fig">
+          <h3>Fusion choice barely matters</h3>
+          <p class="subh">Same W3 model, changing only the fusion operator</p>
+          <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Fusion</th><th>Loss</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Concat–projection (ours)</strong></td><td class="best">2.445</td></tr>
+              <tr><td>Channel competition</td><td>2.446</td></tr>
+              <tr><td>Joint MLP</td><td>2.445</td></tr>
+              <tr><td>Low-rank bilinear</td><td>2.446</td></tr>
+              <tr><td>Joint SwiGLU</td><td>2.444</td></tr>
+              <tr><td>Token softmax</td><td>2.448</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <figcaption>Six operators span less than 0.005 in loss, so we keep the simplest one.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cite">
+  <div class="wrap">
+    <div class="fig-head" style="align-items:center;margin-bottom:16px">
+      <h2 style="margin:0">Cite</h2>
+      <button class="copy" id="copy-bib" type="button">Copy BibTeX</button>
+    </div>
+<pre id="bib">@article{li2026mbt,
+  title  = {Multi-Branch Transformer},
+  author = {Li, Gaotang and Chen, Lingjie and Deng, Chunyuan and Xu, Zhiwei and
+            Chen, Hongzheng and He, Jingrui and Wang, Yingheng and Tong, Hanghang},
+  year   = {2026},
+  note   = {Preprint}
+}</pre>
+    <p class="note">The entry will be updated with the arXiv identifier at release.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Multi-Branch Transformer. University of Illinois Urbana-Champaign, Rice University, University of Michigan, Cornell University.</p>
+    <p>Contact: Gaotang Li, gaotang3@illinois.edu</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var NS='http://www.w3.org/2000/svg';
+var C={ink:'#22252B',slate:'#263B66',muted:'#5B6870',rule:'#DCE1E7',indigo:'#4362C7',teal:'#195E69',purple:'#995692',kv:'#3D9D93'};
+var KC={2:C.indigo,3:C.teal,4:C.purple};
+var KFILL={2:'#E3E8F7',3:'#DDE9EA',4:'#F0E4EE'};
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function h(tag,cls,parent,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(parent)parent.appendChild(e);return e;}
+function fmt(n,d){return n.toFixed(d);}
+function commas(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+
+/* ---------- data (from the paper's source tables) ---------- */
+var S={
+ W1:{params:'0.8B',std:{L:12,d:1024,loss:2.65294,kv:24,tps:7899.4},k:{
+   2:{a:[3,[5,5],3],d:768,loss:2.61993,saved:18.75,tps:9365.03},
+   3:{a:[3,[4,4,4],3],d:640,loss:2.62243,saved:29.17,tps:10256.34},
+   4:{a:[3,[3,3,3,3],3],d:640,loss:2.63282,saved:34.38,tps:11043.16}}},
+ W2:{params:'1.1B',std:{L:14,d:1152,loss:2.55354,kv:31.5,tps:5685.95},k:{
+   2:{a:[3,[6,6],3],d:896,loss:2.52790,saved:23.81,tps:7075.69},
+   3:{a:[3,[5,5,5],4],d:768,loss:2.53674,saved:26.19,tps:7510.13},
+   4:{a:[3,[4,4,4,4],4],d:640,loss:2.53387,saved:34.13,tps:8070.19}}},
+ W3:{params:'1.6B',std:{L:16,d:1280,loss:2.47099,kv:40,tps:4731.71},k:{
+   2:{a:[4,[6,6],4],d:1024,loss:2.43447,saved:20.00,tps:5708.5},
+   3:{a:[4,[5,5,5],4],d:896,loss:2.45095,saved:28.13,tps:6162.39},
+   4:{a:[4,[4,4,4,4],4],d:896,loss:2.45405,saved:32.50,tps:6549.68}}},
+ W4:{params:'2.1B',std:{L:18,d:1408,loss:2.39210,kv:49.5,tps:3918.8},k:{
+   2:{a:[4,[7,7],4],d:1152,loss:2.36140,saved:23.74,tps:4790.05},
+   3:{a:[4,[6,6,6],5],d:896,loss:2.36643,saved:28.79,tps:5083.24},
+   4:{a:[4,[6,6,6,6],5],d:768,loss:2.36400,saved:31.82,tps:5365.41}}}
+};
+var SCALES=['W1','W2','W3','W4'];
+
+/* ---------- hero explorer ---------- */
+var state={scale:'W3',k:4};
+function seg(root,items,get,set){
+  items.forEach(function(it){
+    var b=h('button','',root,it.label);b.type='button';if(it.title)b.title=it.title;
+    b.addEventListener('click',function(){set(it.value);sync();});
+    it.btn=b;
+  });
+  function sync(){items.forEach(function(it){it.btn.setAttribute('aria-pressed',String(get()===it.value));});}
+  sync();return sync;
+}
+function drawDiagram(){
+  var svg=document.getElementById('diagram');while(svg.firstChild)svg.removeChild(svg.firstChild);
+  var small=svg.clientWidth>0&&svg.clientWidth<470,W=small?430:640,M=small?36:60,PM=small?30:42,FS=small?14:15.5;
+  svg.setAttribute('viewBox','0 0 '+W+' 250');
+  var sc=S[state.scale],std=sc.std,cy=118,hs=60/1408,stage=0;
+  var gLines=el('g',{fill:'none',stroke:'#9AA6B6','stroke-width':1.6,'stroke-linecap':'round'},svg);
+  var gKV=el('g',{},svg),gB=el('g',{},svg),gT=el('g',{'font-size':FS,fill:C.muted,'text-anchor':'middle'},svg);
+  function block(x,y,w,ht,fill,stroke,st){
+    el('rect',{x:x,y:y-ht/2,width:w,height:ht,rx:Math.min(5,w/3),fill:fill,stroke:stroke,'stroke-width':1.4,'class':'blk',style:'animation-delay:'+(st*38)+'ms'},gB);
+  }
+  function bracket(x1,x2,label){
+    var y=226;el('path',{d:'M'+x1+' '+(y-5)+'V'+y+'H'+x2+'V'+(y-5),fill:'none',stroke:'#B4BDC9','stroke-width':1.2},svg);
+    el('text',{x:(x1+x2)/2,y:y+18},gT,label);
+  }
+  if(state.k===1){
+    var n=std.L,pitch=Math.min(PM,(W-M)/n),bw=pitch-7,x0=(W-n*pitch)/2,hh=std.d*hs;
+    el('path',{d:'M'+(x0-16)+' '+cy+'H'+(x0+n*pitch+14)+'m-6 -5l6 5l-6 5'},gLines);
+    for(var i=0;i<n;i++)block(x0+i*pitch+3.5,cy,bw,hh,'#DCE5EE','#8497B0',stage++);
+    bracket(x0+3.5,x0+n*pitch-3.5,n+' blocks in sequence');
+    svg.setAttribute('aria-label','Standard Transformer at scale '+state.scale+': '+n+' blocks in sequence.');
+  }else{
+    var cfg=sc.k[state.k],P=cfg.a[0],Lb=cfg.a[1][0],Cn=cfg.a[2],K=state.k;
+    var units=P+Lb+Cn+2.6,pitch2=Math.min(PM,(W-M)/units),bw2=pitch2-7,x=(W-units*pitch2)/2;
+    var hsH=std.d*hs,hb=cfg.d*hs,gap=K===2?18:(K===3?13:10),tot=K*hb+(K-1)*gap,ys=[];
+    for(var r=0;r<K;r++)ys.push(cy-tot/2+hb/2+r*(hb+gap));
+    var xp0=x;el('path',{d:'M'+(x-16)+' '+cy+'H'+(x+P*pitch2)},gLines);
+    for(var p=0;p<P;p++)block(x+p*pitch2+3.5,cy,bw2,hsH,'#DCE5EE','#8497B0',stage++);
+    var xpEnd=x+P*pitch2-3.5;bracket(xp0+3.5,xpEnd,P+' shared');
+    var xs=x+P*pitch2, xb=xs+1.1*pitch2, xbEnd=xb+Lb*pitch2, xf=xbEnd+0.75*pitch2, xc=xbEnd+1.5*pitch2;
+    ys.forEach(function(y){
+      el('path',{d:'M'+(xs-3.5)+' '+cy+'C'+(xs+0.55*pitch2)+' '+cy+' '+(xs+0.5*pitch2)+' '+y+' '+(xb+3.5)+' '+y+'H'+(xbEnd-3.5)+'C'+(xbEnd+0.42*pitch2)+' '+y+' '+(xf-0.4*pitch2)+' '+cy+' '+xf+' '+cy},gLines);
+    });
+    for(var j=0;j<Lb;j++){
+      var bx=xb+j*pitch2+3.5,st=stage++;
+      el('rect',{x:bx-3,y:ys[0]-hb/2-5,width:bw2+6,height:tot+10,rx:7,fill:'rgba(61,157,147,.11)',stroke:C.kv,'stroke-width':1.1,'class':'blk',style:'animation-delay:'+(st*38)+'ms'},gKV);
+      for(var r2=0;r2<K;r2++)block(bx,ys[r2],bw2,hb,KFILL[K],KC[K],st);
+    }
+    bracket(xb+3.5,xbEnd-3.5,K+' branches × '+Lb);
+    el('path',{d:'M'+xf+' '+cy+'H'+(xc+Cn*pitch2+14)+'m-6 -5l6 5l-6 5'},gLines);
+    el('circle',{cx:xf,cy:cy,r:6.5,fill:'#fff',stroke:C.slate,'stroke-width':1.6},gB);
+    el('text',{x:xf+(small?6:0),y:cy-tot/2-12},gT,'fusion');
+    el('path',{d:'M'+xf+' '+(cy-tot/2-8)+'V'+(cy-9),stroke:'#B4BDC9','stroke-width':1,fill:'none'},svg);
+    for(var c=0;c<Cn;c++)block(xc+c*pitch2+3.5,cy,bw2,hsH,'#DCE5EE','#8497B0',stage++);
+    bracket(xc+3.5,xc+Cn*pitch2-3.5,Cn+' shared');
+    svg.setAttribute('aria-label','Multi-Branch Transformer at scale '+state.scale+': '+P+' shared blocks, '+K+' branches of '+Lb+' blocks each with one shared KV cache per depth, fusion, then '+Cn+' shared blocks.');
+  }
+}
+function readouts(){
+  var sc=S[state.scale],std=sc.std,$=function(id){return document.getElementById(id);};
+  if(state.k===1){
+    $('r-depth').innerHTML=std.L+'<small> stages</small><span class="sub">'+std.L+' blocks; '+sc.params+' parameters</span>';
+    $('r-loss').innerHTML=fmt(std.loss,3)+'<span class="sub">baseline</span>';
+    $('r-kv').innerHTML=fmt(std.kv,1)+'<small> KiB</small><span class="sub">baseline</span>';
+    $('r-tps').innerHTML=commas(std.tps)+'<small> tok/s</small><span class="sub">baseline</span>';
+  }else{
+    var c=sc.k[state.k],L=c.a[0]+c.a[1].reduce(function(a,b){return a+b;},0)+c.a[2],D=c.a[0]+c.a[1][0]+c.a[2];
+    $('r-depth').innerHTML=D+'<small> stages</small><span class="sub"><b>−'+(std.L-D)+'</b> vs Standard; '+L+' blocks</span>';
+    $('r-loss').innerHTML=fmt(c.loss,3)+'<span class="sub"><b>'+fmt(c.loss-std.loss,3).replace('-','−')+'</b> vs Standard</span>';
+    $('r-kv').innerHTML=fmt(std.kv*(1-c.saved/100),1)+'<small> KiB</small><span class="sub"><b>−'+fmt(c.saved,1)+'%</b> vs Standard</span>';
+    $('r-tps').innerHTML=commas(c.tps)+'<small> tok/s</small><span class="sub"><b>+'+fmt((c.tps/std.tps-1)*100,1)+'%</b> vs Standard</span>';
+    var sw=document.getElementById('sw-branch');sw.style.background=KFILL[state.k];sw.style.borderColor=KC[state.k];
+  }
+}
+function render(){drawDiagram();readouts();}
+seg(document.getElementById('seg-scale'),SCALES.map(function(s){return {label:s,value:s,title:S[s].params+' total parameters'};}),function(){return state.scale;},function(v){state.scale=v;render();});
+seg(document.getElementById('seg-k'),[{label:'Standard',value:1},{label:'2',value:2},{label:'3',value:3},{label:'4',value:4}],function(){return state.k;},function(v){state.k=v;render();});
+render();
+(function(){var svg=document.getElementById('diagram'),was=svg.clientWidth<470;window.addEventListener('resize',function(){var now=svg.clientWidth<470;if(now!==was){was=now;drawDiagram();}});})();
+
+/* ---------- generic chart ---------- */
+function marker(g,shape,x,y,r,color,filled){
+  var a={fill:filled?color:'#fff',stroke:color,'stroke-width':1.8};
+  if(shape==='square'){a.x=x-r*.9;a.y=y-r*.9;a.width=r*1.8;a.height=r*1.8;return el('rect',a,g);}
+  if(shape==='triangle'){a.d='M'+x+' '+(y-r*1.15)+'L'+(x+r*1.1)+' '+(y+r*.85)+'H'+(x-r*1.1)+'Z';return el('path',a,g);}
+  if(shape==='diamond'){a.d='M'+x+' '+(y-r*1.25)+'L'+(x+r*1.25)+' '+y+'L'+x+' '+(y+r*1.25)+'L'+(x-r*1.25)+' '+y+'Z';return el('path',a,g);}
+  a.cx=x;a.cy=y;a.r=r;return el('circle',a,g);
+}
+function legend(root,items){
+  root.innerHTML='';
+  items.forEach(function(it){
+    var li=h('li','',root);var sw=h('span','sw line'+(it.dash?' dash':''),li);sw.style.borderColor=it.color;
+    li.appendChild(document.createTextNode(it.name));
+  });
+}
+function chart(root,cfg){
+  var tip=h('div','tip',null);
+  function draw(){
+    root.innerHTML='';root.appendChild(tip);
+    var W=Math.max(260,root.clientWidth),H=cfg.height?cfg.height(W):Math.round(Math.min(420,Math.max(250,W*0.62)));
+    var m=Object.assign({t:14,r:18,b:46,l:54},cfg.margin||{});
+    var svg=el('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H,role:'img','aria-label':cfg.aria||''},null);root.appendChild(svg);
+    var xd=cfg.x.domain,yd=cfg.y.domain,log=cfg.x.type==='log';
+    function sx(v){var t=log?(Math.log(v)-Math.log(xd[0]))/(Math.log(xd[1])-Math.log(xd[0])):(v-xd[0])/(xd[1]-xd[0]);return m.l+t*(W-m.l-m.r);}
+    function sy(v){var t=(v-yd[0])/(yd[1]-yd[0]);if(cfg.y.invert)t=1-t;return H-m.b-t*(H-m.t-m.b);}
+    var g=el('g',{},svg);
+    cfg.y.ticks.forEach(function(t){
+      el('line',{x1:m.l,x2:W-m.r,y1:sy(t),y2:sy(t),stroke:C.rule,'stroke-width':1},g);
+      el('text',{x:m.l-9,y:sy(t)+4,'text-anchor':'end','class':'tick'},g,cfg.y.fmt?cfg.y.fmt(t):t);
+    });
+    cfg.x.ticks.forEach(function(t){
+      var v=t.v!=null?t.v:t,lab=t.label!=null?t.label:t;
+      el('line',{x1:sx(v),x2:sx(v),y1:H-m.b,y2:H-m.b+5,stroke:'#9AA6B6','stroke-width':1},g);
+      el('text',{x:sx(v),y:H-m.b+20,'text-anchor':'middle','class':'tick'},g,lab);
+    });
+    el('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,stroke:'#9AA6B6','stroke-width':1},g);
+    if(cfg.x.label)el('text',{x:(m.l+W-m.r)/2,y:H-6,'text-anchor':'middle','class':'axis-label'},g,cfg.x.label);
+    if(cfg.y.label)el('text',{x:14,y:(m.t+H-m.b)/2,'text-anchor':'middle','class':'axis-label',transform:'rotate(-90 14 '+((m.t+H-m.b)/2)+')'},g,cfg.y.label);
+    (cfg.annotations||[]).forEach(function(a){
+      if(a.hline!=null){
+        el('line',{x1:m.l,x2:W-m.r,y1:sy(a.hline),y2:sy(a.hline),stroke:C.ink,'stroke-width':1.6,'stroke-dasharray':'6 5'},g);
+        if(a.label)el('text',{x:W-m.r,y:sy(a.hline)-7,'text-anchor':'end','class':'anno'},g,a.label);
+      }
+      if(a.vband){
+        el('rect',{x:sx(a.vband[0]),y:m.t,width:sx(a.vband[1])-sx(a.vband[0]),height:H-m.t-m.b,fill:a.fill||'rgba(38,59,102,.07)'},g);
+        var lines=[].concat(a.label||[]),tx=(sx(a.vband[0])+sx(a.vband[1]))/2;
+        lines.forEach(function(s,i){el('text',{x:tx,y:m.t+14+i*15,'text-anchor':a.anchor||'middle','class':'anno'},g,s);});
+      }
+    });
+    var pts=[];
+    cfg.series.forEach(function(s){
+      var d='';
+      if(s.fit){
+        var a=Math.log(s.fit.x0),b=Math.log(s.fit.x1);
+        for(var i=0;i<=24;i++){var xv=Math.exp(a+(b-a)*i/24);d+=(i?'L':'M')+sx(xv).toFixed(1)+' '+sy(s.fit.A*Math.pow(xv,-s.fit.alpha)).toFixed(1);}
+      }else{
+        s.pts.forEach(function(p,i){d+=(i?'L':'M')+sx(p.x).toFixed(1)+' '+sy(p.y).toFixed(1);});
+      }
+      el('path',{d:d,fill:'none',stroke:s.color,'stroke-width':s.width||2,'stroke-dasharray':s.dash?'6 5':'none','stroke-linejoin':'round','stroke-linecap':'round'},g);
+    });
+    cfg.series.forEach(function(s){
+      s.pts.forEach(function(p){
+        var px=sx(p.x),py=sy(p.y);
+        if(!s.noMarkers){el('circle',{cx:px,cy:py,r:(s.r||4.2)+2,fill:'#fff'},g);marker(g,p.shape||s.shape||'circle',px,py,s.r||4.2,s.color,s.filled!==false&&!s.hollow);}
+        pts.push({px:px,py:py,p:p,s:s});
+      });
+      if(s.endLabel){var lp=s.pts[s.pts.length-1];el('text',{x:sx(lp.x)+10,y:sy(lp.y)+4,'class':'endlabel'},g,s.endLabel);}
+    });
+    var ring=el('circle',{r:8,fill:'none',stroke:C.slate,'stroke-width':2,opacity:0},svg);
+    function move(ev){
+      var rc=svg.getBoundingClientRect(),mx=(ev.clientX-rc.left)*(W/rc.width),my=(ev.clientY-rc.top)*(H/rc.height),best=null,bd=1e9;
+      pts.forEach(function(q){var dd=(q.px-mx)*(q.px-mx)+(q.py-my)*(q.py-my);if(dd<bd){bd=dd;best=q;}});
+      if(best&&bd<60*60){
+        ring.setAttribute('cx',best.px);ring.setAttribute('cy',best.py);ring.setAttribute('opacity',1);
+        tip.innerHTML=cfg.tip(best.p,best.s);tip.className='tip on';
+        var tx=Math.min(Math.max(best.px,tip.offsetWidth/2+2),W-tip.offsetWidth/2-2);
+        tip.style.left=(tx*(rc.width/W))+'px';tip.style.top=(best.py*(rc.height/H))+'px';
+      }else leave();
+    }
+    function leave(){ring.setAttribute('opacity',0);tip.className='tip';}
+    svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',leave);
+  }
+  draw();
+  var t;if(window.ResizeObserver){var lastW=root.clientWidth;new ResizeObserver(function(){if(root.clientWidth===lastW)return;lastW=root.clientWidth;clearTimeout(t);t=setTimeout(draw,80);}).observe(root);}
+  return draw;
+}
+
+/* ---------- chart: parallel-block ratio ---------- */
+var RATIO={
+ W1:[[0,2.6529],[16.7,2.6271],[33.3,2.6222],[50,2.6296],[66.7,2.6406],[83.3,2.6588],[100,2.6843]],
+ W2:[[0,2.5535],[14.3,2.5294],[28.6,2.5252],[42.9,2.5321],[57.1,2.5332],[71.4,2.5473],[85.7,2.5584],[100,2.5985]],
+ W3:[[0,2.4710],[12.5,2.4485],[25,2.4445],[37.5,2.4442],[50,2.4455],[62.5,2.4539],[75,2.4636],[87.5,2.4840],[100,2.5033]],
+ W4:[[0,2.3921],[11.1,2.3694],[22.2,2.3691],[33.3,2.3672],[44.4,2.3700],[55.6,2.3728],[66.7,2.3753],[77.8,2.3901],[88.9,2.4068],[100,2.4344]]
+};
+var RCOL={W1:'#93A5E2',W2:'#6C84D6',W3:'#4362C7',W4:'#263B66'},RSHAPE={W1:'circle',W2:'square',W3:'triangle',W4:'diamond'};
+legend(document.getElementById('lg-ratio'),SCALES.map(function(s){return {name:s+' ('+S[s].params+')',color:RCOL[s]};}));
+chart(document.getElementById('ch-ratio'),{
+  aria:'Validation loss relative to Standard against the percentage of blocks in two parallel branches, for four scales. All curves dip to about minus 0.03 near one third and cross zero near 79 percent.',
+  margin:{l:62,r:16,t:10},
+  x:{domain:[0,100],ticks:[0,20,40,60,80,100].map(function(v){return {v:v,label:v+'%'};}),label:'Blocks in parallel branches'},
+  y:{domain:[-0.04,0.05],ticks:[-0.03,-0.02,-0.01,0,0.01,0.02,0.03,0.04],fmt:function(t){return (t>0?'+':t<0?'−':'')+Math.abs(t).toFixed(2);},label:'Loss relative to Standard'},
+  annotations:[
+    {vband:[28.6,37.5],label:['lowest','loss']},
+    {vband:[78,80],label:['matches','Standard'],fill:'rgba(38,59,102,.10)'},
+    {hline:0}
+  ],
+  series:SCALES.map(function(s){var base=RATIO[s][0][1];return {name:s,color:RCOL[s],shape:RSHAPE[s],r:3.6,width:2,pts:RATIO[s].map(function(p){return {x:p[0],y:p[1]-base,loss:p[1],base:base};})};}),
+  tip:function(p,s){return '<b>'+s.name+'</b>, '+fmt(p.x,1)+'% of blocks in branches<br>loss '+fmt(p.loss,3)+' ('+(p.y>0?'+':'−')+fmt(Math.abs(p.y),3)+' vs Standard)';}
+});
+
+/* ---------- bars: downstream tasks ---------- */
+var TASKS=[['HellaSwag',51.52,52.97],['ARC-Easy',62.24,64.84],['ARC-Chall.',34.39,35.96],['OpenBookQA',36.95,39.10],['SciQ',80.33,82.58],['WinoGrande',55.60,56.33],['BoolQ',54.98,59.13],['LAMBADA',40.36,41.11],['PIQA',71.69,72.23]];
+(function(){var root=document.getElementById('bars-tasks'),max=4.4;
+  TASKS.forEach(function(t){var gain=t[2]-t[1],row=h('div','bar-row',root);
+    h('div','lab',row,t[0]);var tr=h('div','bar-track',row);var f=h('div','bar-fill',tr);f.style.width=(gain/max*100)+'%';
+    h('div','val',row,'<b>+'+fmt(gain,2)+'</b> <span class="range">'+fmt(t[1],1)+' → '+fmt(t[2],1)+'</span>');
+  });
+})();
+
+/* ---------- chart: more branches ---------- */
+var MB={
+ std:{pts:[[0.3665,2.6556],[0.7746,2.5660],[1.5032,2.4710],[2.7265,2.3921]],fit:[2.52423,0.05244]},
+ ws:{2:{pts:[[0.3706,2.6296],[0.7822,2.5288],[1.5164,2.4455],[2.7482,2.3728]],fit:[2.49837,0.05125]},
+     3:{pts:[[0.3726,2.6334],[0.7860,2.5346],[1.5230,2.4574],[2.7591,2.3732]],fit:[2.50446,0.05136]},
+     4:{pts:[[0.3746,2.6280],[0.7898,2.5329],[1.5296,2.4508],[2.7699,2.3733]],fit:[2.50164,0.05079]}},
+ bal:{2:{pts:[[0.3717,2.6176],[0.7838,2.5250],[1.5301,2.4356],[2.7620,2.3630]],fit:[2.49011,0.05127]},
+      3:{pts:[[0.3745,2.6234],[0.7856,2.5295],[1.5160,2.4464],[2.7443,2.3663]],fit:[2.49605,0.05163]},
+      4:{pts:[[0.3758,2.6260],[0.7782,2.5292],[1.5148,2.4492],[2.7985,2.3668]],fit:[2.49786,0.05137]}}
+};
+function fitSeries(name,color,o,extra){
+  var s={name:name,color:color,fit:{A:o.fit[0],alpha:o.fit[1],x0:o.pts[0][0],x1:o.pts[3][0]},pts:o.pts.map(function(p,i){return {x:p[0],y:p[1],scale:SCALES[i]};})};
+  for(var k in extra)s[k]=extra[k];return s;
+}
+var LOGX={type:'log',domain:[0.33,3.1],ticks:[0.4,0.8,1.6,2.8],label:'Training body compute (PFLOP-days, log scale)'};
+var LOSSY={domain:[2.34,2.68],ticks:[2.35,2.40,2.45,2.50,2.55,2.60,2.65],fmt:function(t){return t.toFixed(2);},label:'Validation loss'};
+var mbK=2,mbDraw;
+function mbRender(){
+  var series=[fitSeries('Standard',C.ink,MB.std,{dash:true,shape:'square',hollow:true}),
+              fitSeries('Wide–Shallow MBT','#9AA6B6',MB.ws[mbK],{shape:'triangle'}),
+              fitSeries('Balanced MBT',KC[mbK],MB.bal[mbK],{shape:'circle'})];
+  legend(document.getElementById('lg-mb'),series);
+  var root=document.getElementById('ch-mb');
+  chart(root,{aria:'Validation loss against training body compute for Standard, Wide–Shallow and Balanced MBTs with '+mbK+' branches. Both MBT curves lie below Standard, Balanced lowest.',
+    x:LOGX,y:LOSSY,series:series,
+    tip:function(p,s){return '<b>'+s.name+'</b>, '+p.scale+'<br>loss '+fmt(p.y,3)+' at '+fmt(p.x,3)+' PFLOP-days';}});
+}
+seg(document.getElementById('seg-mb'),[2,3,4].map(function(k){return {label:String(k),value:k};}),function(){return mbK;},function(v){mbK=v;mbRender();});
+mbRender();
+
+/* ---------- chart: quality vs speed ---------- */
+(function(){
+  var shapes={W1:'circle',W2:'square',W3:'triangle',W4:'diamond'};
+  function ser(name,color,get,extra){var s={name:name,color:color,r:4.6,pts:SCALES.map(function(w){var o=get(S[w]);return {x:o.tps/1000,y:Math.exp(o.loss),loss:o.loss,scale:w,shape:shapes[w]};})};for(var k in extra)s[k]=extra[k];return s;}
+  var series=[ser('Standard',C.ink,function(s){return s.std;},{dash:true,hollow:true}),
+    ser('2-branch MBT',KC[2],function(s){return s.k[2];}),ser('3-branch MBT',KC[3],function(s){return s.k[3];}),ser('4-branch MBT',KC[4],function(s){return s.k[4];})];
+  legend(document.getElementById('lg-pareto'),series);
+  chart(document.getElementById('ch-pareto'),{aria:'Validation perplexity against decode throughput. At every scale the 2-, 3- and 4-branch MBTs have lower perplexity and higher throughput than Standard.',
+    margin:{l:50},
+    x:{domain:[3.4,11.6],ticks:[4,6,8,10],label:'Decode throughput (thousand tokens per second)'},
+    y:{domain:[10.35,14.55],invert:true,ticks:[11,12,13,14],label:'Validation perplexity (lower is better)'},
+    series:series,
+    tip:function(p,s){return '<b>'+s.name+'</b>, '+p.scale+'<br>perplexity '+fmt(p.y,2)+' (loss '+fmt(p.loss,3)+')<br>'+commas(p.x*1000)+' tok/s';}});
+})();
+
+/* ---------- table: final models ---------- */
+(function(){var tb=document.getElementById('tb-final');
+  SCALES.forEach(function(w){var s=S[w],best=Math.min(s.k[2].loss,s.k[3].loss,s.k[4].loss),tr=h('tr','',tb);
+    h('td','',tr,'<strong>'+w+'</strong> <span style="color:var(--muted)">'+s.params+'</span>');h('td','',tr,fmt(s.std.loss,3)+'<span class="saved">'+fmt(s.std.kv,1)+' KiB</span>');
+    [2,3,4].forEach(function(k){var c=s.k[k];h('td',c.loss===best?'best':'',tr,fmt(c.loss,3)+'<span class="saved">−'+fmt(c.saved,1)+'% KV</span>');});
+  });
+})();
+
+/* ---------- small multiples: decode speedup ---------- */
+(function(){
+  var D=[{len:'4K input',n:[1,8,64],k2:[1.007,1.045,1.130],k3:[1.055,1.093,1.185],k4:[1.120,1.143,1.248]},
+         {len:'16K input',n:[1,8,64],k2:[1.025,1.113,1.215],k3:[1.075,1.180,1.305],k4:[1.143,1.252,1.392]},
+         {len:'64K input',n:[1,8,32],k2:[1.068,1.193,1.248],k3:[1.125,1.290,1.340],k4:[1.200,1.393,1.417]},
+         {len:'128K input',n:[1,8,16],k2:[1.137,1.228,1.317],k3:[1.203,1.338,1.410],k4:[1.280,1.458,1.495]}];
+  legend(document.getElementById('lg-dec'),[{name:'4 branches',color:KC[4]},{name:'3 branches',color:KC[3]},{name:'2 branches',color:KC[2]},{name:'Standard',color:C.ink,dash:true}]);
+  var root=document.getElementById('ch-dec');
+  D.forEach(function(d,i){
+    var cell=h('div','',root);h('h4','',cell,d.len);var c=h('div','chart',cell);
+    function ser(name,color,arr){return {name:name,color:color,r:3.8,pts:arr.map(function(v,j){return {x:j,y:v,n:d.n[j]};})};}
+    chart(c,{aria:'Decode speedup at '+d.len,height:function(){return 230;},margin:{l:40,r:12,t:8,b:44},
+      x:{domain:[-0.25,2.25],ticks:d.n.map(function(n,j){return {v:j,label:n};}),label:'Concurrent requests'},
+      y:{domain:[0.95,1.55],ticks:[1.0,1.1,1.2,1.3,1.4,1.5],fmt:function(t){return t.toFixed(1)+'×';}},
+      annotations:[{hline:1}],
+      series:[ser('2 branches',KC[2],d.k2),ser('3 branches',KC[3],d.k3),ser('4 branches',KC[4],d.k4)],
+      tip:function(p,s){return '<b>'+s.name+'</b>, '+d.len+'<br>'+p.n+' concurrent: '+fmt(p.y,2)+'× Standard';}});
+  });
+})();
+
+/* ---------- chart: width/depth ablation ---------- */
+(function(){
+  var WD={
+   'Standard':{pts:[[0.3665,2.6529],[0.7746,2.5535],[1.5032,2.4710],[2.7265,2.3921]],fit:[2.52043,0.05134]},
+   'Global wide–shallow (sequential)':{pts:[[0.3721,2.6607],[0.7894,2.5522],[1.5190,2.4737],[2.7511,2.3969]],fit:[2.52571,0.05180]},
+   'Local wide-core (sequential)':{pts:[[0.3636,2.6376],[0.7707,2.5453],[1.5062,2.4578],[2.7478,2.3817]],fit:[2.50849,0.05058]},
+   'Wide–Shallow MBT':{pts:[[0.3706,2.6296],[0.7822,2.5332],[1.5164,2.4455],[2.7482,2.3728]],fit:[2.49950,0.05147]},
+   'Narrow–Deep MBT':{pts:[[0.3705,2.6406],[0.7817,2.5296],[1.5155,2.4479],[2.7396,2.3635]],fit:[2.49962,0.05484]}};
+  var st={'Standard':[C.ink,'square',true,true],'Global wide–shallow (sequential)':['#A8903F','diamond',false,true],'Local wide-core (sequential)':['#8C97A6','triangle',false,true],'Wide–Shallow MBT':[C.indigo,'circle',false,false],'Narrow–Deep MBT':[C.purple,'circle',false,false]};
+  var series=Object.keys(WD).map(function(n){return fitSeries(n,st[n][0],WD[n],{shape:st[n][1],dash:st[n][2],hollow:st[n][3],r:3.8});});
+  legend(document.getElementById('lg-wd'),series);
+  chart(document.getElementById('ch-wd'),{aria:'Validation loss against training body compute for Standard, two wider sequential controls, and Wide–Shallow and Narrow–Deep 2-branch MBTs. Both MBTs lie below the sequential models.',
+    x:LOGX,y:LOSSY,series:series,
+    tip:function(p,s){return '<b>'+s.name+'</b>, '+p.scale+'<br>loss '+fmt(p.y,3)+' at '+fmt(p.x,3)+' PFLOP-days';}});
+})();
+
+/* ---------- bars: branch placement ---------- */
+(function(){
+  var rows=[['Early','bss',2.458,false],['Middle (ours)','sbs',2.445,true],['Late','ssb',2.464,false]];
+  var lo=2.440,hi=2.475,std=2.471,root=document.getElementById('place');
+  function pos(v){return ((v-lo)/(hi-lo)*100)+'%';}
+  rows.forEach(function(r){
+    var row=h('div','place-row'+(r[3]?' ours':''),root),lab=h('div','lab',row),mini=h('span','mini',lab);
+    r[1].split('').forEach(function(ch){h('i',ch==='b'?'b':'',mini);});
+    lab.appendChild(document.createTextNode(r[0]));
+    var tr=h('div','dot-track',row);h('span','std-tick',tr).style.left=pos(std);h('span','dot-mark',tr).style.left=pos(r[2]);
+    h('div','val',row,fmt(r[2],3));
+  });
+  var ax=h('div','place-row place-axis',root);h('div','',ax);var t=h('div','dot-track axis',ax);
+  h('span','axl',t,'2.440').style.left='0';var sl=h('span','axl',t,'Standard 2.471');sl.style.left=pos(std);sl.style.transform='translateX(-50%)';h('div','',ax);
+})();
+
+/* ---------- copy bibtex ---------- */
+document.getElementById('copy-bib').addEventListener('click',function(){
+  var b=this,t=document.getElementById('bib').textContent;
+  function done(ok){b.textContent=ok?'Copied':'Select the text to copy';setTimeout(function(){b.textContent='Copy BibTeX';},1800);}
+  try{navigator.clipboard.writeText(t).then(function(){done(true);},function(){done(false);});}catch(e){done(false);}
+});
+})();
+</script>
+</body>
+</html>
