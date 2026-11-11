@@ -31,7 +31,7 @@ a{color:var(--indigo);text-decoration-thickness:1px;text-underline-offset:3px}
 a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:4px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
-h1,h2,h3,.ui,nav,button,figcaption,table,.readout,.legend,.tip{font-family:var(--sans)}
+h1,h2,h3,.ui,nav,button,figcaption,table,.legend,.tip{font-family:var(--sans)}
 h1,h2,h3{color:var(--slate);margin:0;text-wrap:balance}
 p{margin:0 0 1em;max-width:68ch}
 strong{font-weight:600}
@@ -85,14 +85,12 @@ h1 span{white-space:nowrap}
 .sw{display:inline-block;width:13px;height:13px;border-radius:3.5px;border:1.5px solid}
 .sw.line{width:20px;height:0;border-radius:0;border-width:0;border-top-width:2.5px}
 .sw.dash{border-top-style:dashed}
-.readouts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);margin:0}
-.readout{padding:14px 12px 4px 0}
-.readout + .readout{padding-left:14px;border-left:1px solid var(--rule)}
-.readout dt{font-size:13px;color:var(--muted);line-height:1.3;min-height:2.6em;display:flex;align-items:flex-end}
-.readout dd{margin:4px 0 0;font-size:24px;font-weight:700;color:var(--slate);line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
-.readout dd small{font-size:14px;font-weight:600;margin-left:1px}
-.readout .sub{display:block;min-height:2.7em;font-size:13px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.35;white-space:normal}
-.readout .sub b{font-weight:700;color:var(--teal)}
+table.cmp{font-size:14.5px;margin:2px 0 0;border-top:1px solid var(--rule)}
+table.cmp th,table.cmp td{padding:7px 0 7px 12px}
+table.cmp thead th{font-size:13px;border-bottom:1px solid var(--rule)}
+table.cmp th:first-child,table.cmp td:first-child{padding-left:0}
+table.cmp td:first-child{color:var(--muted);white-space:normal}
+table.cmp td:nth-child(3){font-weight:600;color:var(--slate)}
 .note{font:400 13.5px/1.5 var(--sans);color:var(--muted);margin:12px 0 0;max-width:none}
 
 /* sections */
@@ -116,13 +114,10 @@ figcaption{font-size:14px;line-height:1.5;color:var(--muted);margin-top:12px;max
 .fig-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 18px;margin-bottom:6px}
 video{width:100%;height:auto;border-radius:10px;background:#EEF1F5;border:1px solid var(--rule)}
 
-.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:34px 0 0;border-top:1px solid var(--rule)}
-.facts > div{padding:20px 24px 0 0}
-.facts > div + div{padding-left:24px;border-left:1px solid var(--rule)}
-.facts dt{font:800 clamp(34px,4vw,48px)/1 var(--sans);color:var(--slate);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.facts dt small{font-size:16px;font-weight:600;letter-spacing:0;color:var(--muted);margin-right:4px}
-.facts dd{margin:10px 0 0;font:400 15.5px/1.45 var(--sans);color:var(--muted);max-width:30ch}
 
+.keys{margin:30px 0 0;padding:22px 0 0 1.15em;border-top:1px solid var(--rule);max-width:78ch}
+.keys li{margin:0 0 .5em;padding-left:.2em}
+.keys strong{color:var(--slate)}
 .points{list-style:none;margin:0;padding:0;font-family:var(--sans);font-size:16px;line-height:1.5}
 .points li{padding:14px 0;border-top:1px solid var(--rule)}
 .points li:last-child{border-bottom:1px solid var(--rule)}
@@ -180,23 +175,17 @@ footer p{max-width:none;margin:0 0 4px}
 }
 @media (max-width:640px){
   body{font-size:17px}
-  .readout dt{min-height:0}
-  .readout .sub{min-height:0}
   .wrap{padding:0 18px}
   .topbar .wrap{gap:16px}
   .brand span{display:none}
   .explorer{padding:16px 14px 14px;border-radius:14px}
-  .readouts{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .readout:nth-child(3){padding-left:0;border-left:0}
-  .readout:nth-child(n+3){border-top:1px solid var(--rule)}
-  .readout dd{font-size:21px}
-  .facts{grid-template-columns:minmax(0,1fr)}
-  .facts > div + div{padding-left:0;border-left:0;border-top:1px solid var(--rule);margin-top:20px}
   .fig{padding:16px 14px 14px}
   .bar-row{grid-template-columns:88px minmax(0,1fr) 44px;gap:8px;font-size:13.5px}
   .bar-row .range{display:none}
   .fig.pad-lg{padding:16px 12px 14px}
   th,td{padding:8px 0 8px 10px}
+  table.cmp{font-size:13.5px}
+  table.cmp th,table.cmp td{padding:6px 0 6px 8px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -230,12 +219,12 @@ footer p{max-width:none;margin:0 0 4px}
       <p class="tagline">Scaling language models through parallel branches.</p>
       <p class="authors">
         <span><a href="https://gaotangli.github.io/">Gaotang Li</a><sup>1,*,†</sup>,</span>
-        <span>Lingjie Chen<sup>1,†</sup>,</span>
-        <span>Chunyuan Deng<sup>2,†</sup>,</span>
-        <span>Zhiwei Xu<sup>3,†</sup>,</span>
-        <span>Hongzheng Chen<sup>4,†</sup>,</span>
-        <span>Jingrui He<sup>1</sup>,</span>
-        <span>Yingheng Wang<sup>4,†,§</sup>,</span>
+        <span><a href="https://lingjiechen2.github.io/">Lingjie Chen</a><sup>1,†</sup>,</span>
+        <span><a href="https://charlesdddd.github.io/">Chunyuan Deng</a><sup>2,†</sup>,</span>
+        <span><a href="https://zhiweixx.github.io/">Zhiwei Xu</a><sup>3,†</sup>,</span>
+        <span><a href="https://github.com/chhzh123">Hongzheng Chen</a><sup>4,†</sup>,</span>
+        <span><a href="https://www.hejingrui.org/">Jingrui He</a><sup>1</sup>,</span>
+        <span><a href="https://isjakewong.github.io/">Yingheng Wang</a><sup>4,†,§</sup>,</span>
         <span><a href="http://tonghanghang.org/">Hanghang Tong</a><sup>1,§</sup></span>
       </p>
       <p class="affil">
@@ -272,12 +261,10 @@ footer p{max-width:none;margin:0 0 4px}
         <li><span class="sw" id="sw-branch" style="background:#E3E8F7;border-color:var(--indigo)"></span>Branch block</li>
         <li><span class="sw" style="background:rgba(61,157,147,.12);border-color:var(--kv)"></span>One shared KV cache per depth</li>
       </ul>
-      <dl class="readouts">
-        <div class="readout"><dt>Sequential depth</dt><dd id="r-depth"></dd></div>
-        <div class="readout"><dt>Validation loss</dt><dd id="r-loss"></dd></div>
-        <div class="readout"><dt>KV cache per token</dt><dd id="r-kv"></dd></div>
-        <div class="readout"><dt>Decode throughput</dt><dd id="r-tps"></dd></div>
-      </dl>
+      <table class="cmp">
+        <thead><tr><th></th><th>Standard</th><th id="cmp-h">MBT</th><th>Change</th></tr></thead>
+        <tbody id="cmp-b"></tbody>
+      </table>
       <p class="note">Balanced MBTs with Joint-KV, as trained in the paper. A token moves left to right, and blocks in one column run as one stage. Block height is proportional to residual width. Throughput is total output tokens per second on one H200 with 16K-token inputs and 64 concurrent requests.</p>
     </div>
   </div>
@@ -296,11 +283,11 @@ footer p{max-width:none;margin:0 0 4px}
         <source src="assets/architecture.mp4" type="video/mp4">
       </video>
     </div>
-    <dl class="facts">
-      <div><dt><small>up to</small> 1.26×</dt><dd>the training body compute a standard Transformer needs to match our final models' validation loss, from fitted scaling curves</dd></div>
-      <div><dt><small>up to</small> 34%</dt><dd>less KV-cache storage for the full model, across the evaluated configurations</dd></div>
-      <div><dt><small>up to</small> 51.4%</dt><dd>higher decoding throughput on a single H200 GPU, with the same serving engine for both models</dd></div>
-    </dl>
+    <ul class="keys">
+      <li>By fitted scaling curves, a standard Transformer needs <strong>up to 1.26×</strong> the training body compute to match our final models' validation loss.</li>
+      <li>The final models store <strong>up to 34%</strong> less KV cache across the evaluated configurations.</li>
+      <li>They reach <strong>up to 51.4%</strong> higher decoding throughput on a single H200 GPU, with the same serving engine for both models.</li>
+    </ul>
   </div>
 </section>
 
@@ -572,20 +559,22 @@ function drawDiagram(){
   }
 }
 function readouts(){
-  var sc=S[state.scale],std=sc.std,$=function(id){return document.getElementById(id);};
-  if(state.k===1){
-    $('r-depth').innerHTML=std.L+'<small> stages</small><span class="sub">'+std.L+' blocks; '+sc.params+' parameters</span>';
-    $('r-loss').innerHTML=fmt(std.loss,3)+'<span class="sub">baseline</span>';
-    $('r-kv').innerHTML=fmt(std.kv,1)+'<small> KiB</small><span class="sub">baseline</span>';
-    $('r-tps').innerHTML=commas(std.tps)+'<small> tok/s</small><span class="sub">baseline</span>';
-  }else{
-    var c=sc.k[state.k],L=c.a[0]+c.a[1].reduce(function(a,b){return a+b;},0)+c.a[2],D=c.a[0]+c.a[1][0]+c.a[2];
-    $('r-depth').innerHTML=D+'<small> stages</small><span class="sub"><b>−'+(std.L-D)+'</b> vs Standard; '+L+' blocks</span>';
-    $('r-loss').innerHTML=fmt(c.loss,3)+'<span class="sub"><b>'+fmt(c.loss-std.loss,3).replace('-','−')+'</b> vs Standard</span>';
-    $('r-kv').innerHTML=fmt(std.kv*(1-c.saved/100),1)+'<small> KiB</small><span class="sub"><b>−'+fmt(c.saved,1)+'%</b> vs Standard</span>';
-    $('r-tps').innerHTML=commas(c.tps)+'<small> tok/s</small><span class="sub"><b>+'+fmt((c.tps/std.tps-1)*100,1)+'%</b> vs Standard</span>';
+  var sc=S[state.scale],std=sc.std,mbt=state.k>1,c=mbt?sc.k[state.k]:null,rows;
+  function sgn(v,d){return (v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(d);}
+  if(mbt){
+    var L=c.a[0]+c.a[1].reduce(function(a,b){return a+b;},0)+c.a[2],D=c.a[0]+c.a[1][0]+c.a[2],kv=std.kv*(1-c.saved/100);
+    rows=[['Blocks',std.L,L,sgn(L-std.L,0)],
+          ['Sequential stages',std.L,D,sgn(D-std.L,0)],
+          ['Validation loss',fmt(std.loss,3),fmt(c.loss,3),sgn(c.loss-std.loss,3)],
+          ['KV cache per token (KiB)',fmt(std.kv,1),fmt(kv,1),'−'+fmt(c.saved,1)+'%'],
+          ['Decode throughput (tok/s)',commas(std.tps),commas(c.tps),'+'+fmt((c.tps/std.tps-1)*100,1)+'%']];
     var sw=document.getElementById('sw-branch');sw.style.background=KFILL[state.k];sw.style.borderColor=KC[state.k];
+  }else{
+    rows=[['Blocks',std.L,'–','–'],['Sequential stages',std.L,'–','–'],['Validation loss',fmt(std.loss,3),'–','–'],
+          ['KV cache per token (KiB)',fmt(std.kv,1),'–','–'],['Decode throughput (tok/s)',commas(std.tps),'–','–']];
   }
+  document.getElementById('cmp-h').textContent=mbt?state.k+'-branch MBT':'MBT';
+  document.getElementById('cmp-b').innerHTML=rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('');
 }
 function render(){drawDiagram();readouts();}
 seg(document.getElementById('seg-scale'),SCALES.map(function(s){return {label:s,value:s,title:S[s].params+' total parameters'};}),function(){return state.scale;},function(v){state.scale=v;render();});
