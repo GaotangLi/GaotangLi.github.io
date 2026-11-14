@@ -367,6 +367,7 @@ footer p{max-width:none;margin:0 0 4px}
         <h2>Joint-KV: one cache per depth, shared by all branches</h2>
         <p>By default every block in every branch builds its own keys and values, so more branches mean more KV caches. At long contexts, reading those caches dominates decoding time.</p>
         <p><strong>Joint-KV</strong> has all branches at the same depth construct one shared KV cache from their concatenated inputs, while each branch keeps its own queries. For <em>K</em> branches this cuts cache storage in the branch region to 1/<em>K</em> of independent caches, with the same projection parameters and FLOPs.</p>
+        <p>Sharing is also the better way to compress. In a controlled two-branch comparison at equal cache size (W1–W4), Joint-KV reaches 0.011–0.012 lower validation loss than giving each branch its own smaller cache.</p>
         <p>Joint-KV changes the model and is used in training. The inference engine then changes only how the model is executed.</p>
       </div>
       <video controls muted playsinline preload="metadata" poster="assets/joint-kv-inference-poster.jpg" aria-label="Animation: from independent KV caches to Joint-KV with grouped queries, one attention call and one cache read, ending with the measured decoding speedup">
