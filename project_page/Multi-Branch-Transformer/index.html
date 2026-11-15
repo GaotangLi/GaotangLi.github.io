@@ -273,7 +273,7 @@ footer p{max-width:none;margin:0 0 4px}
   <div class="wrap">
     <div class="two wide-left">
       <div>
-        <h2>A third way to scale, next to width and depth</h2>
+        <h2>Another way to scale, alongside width and depth</h2>
         <p class="lede">Transformer language models are usually scaled by making their blocks wider or by stacking more of them. We study a complementary option, <strong>branching</strong>: the parallel composition of full Transformer blocks.</p>
         <p>A Multi-Branch Transformer (MBT) runs the input through a few shared blocks, splits into independently parameterized branches that each remain a sequence of full blocks, fuses the branch outputs, and finishes with shared blocks. Every token passes through every branch.</p>
         <p>In controlled pretraining at four mixture-of-experts scales, from 0.8B to 2.1B total parameters, MBTs reach lower validation loss than sequential Transformers at comparable training compute. With Joint-KV cache sharing and an inference engine that exploits the branch structure, they also decode faster.</p>
