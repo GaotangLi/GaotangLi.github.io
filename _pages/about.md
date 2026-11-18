@@ -40,7 +40,7 @@ You can call me as Oliver. If you would like to chat with me about anything (e.g
 
 <!-- ## Language Models and Agents -->
 
-* {: .featured .selected} [Multi-Branch Transformer](https://gaotangli.github.io/project_page/Multi-Branch-Transformer/)<br> 
+* {: .featured .selected} [Multi-Branch Transformer](https://arxiv.org/abs/2611.19800)<br> 
 **Gaotang Li**, Lingjie Chen, Chunyuan Deng, Zhiwei Xu, Hongzheng Chen, Christopher De Sa, Jingrui He, Yingheng Wang, Hanghang Tong<br>
 *Manuscript 2026*<br> 
 [[PDF](https://arxiv.org/pdf/2611.19800)] [[Code](https://github.com/GaotangLi/Multi-Branch-Transformer)] [[HuggingFace](https://huggingface.co/collections/gaotang/multi-branch-transformer)] [[Project Page](https://gaotangli.github.io/project_page/Multi-Branch-Transformer/)] [[Tweet](https://x.com/GaotangLi/status/2122718169378730253)]<br>
